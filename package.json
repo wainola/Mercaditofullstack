@@ -1,0 +1,21 @@
+{
+  "name": "mercaditofullstack",
+  "version": "1.0.0",
+  "description": "rest api for mercadito de larmahue",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "Nicolás Riquelme Guzmán",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^3.5.1",
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.2"
+  }
+}
