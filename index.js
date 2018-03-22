@@ -1,16 +1,27 @@
 const express = require('express');
 const path = require('path');
+const http = require('http');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
 const mongoose = require('mongoose');
+const router = require('./router');
 
 // Controllers
 const GetProductos = require('./controllers/products');
 
 const app = express();
+// LOGING LIBRARY
+app.use(morgan('combined'));
+// PARSING ALL THE INCOMING REQ AS JSON
+app.use(bodyParser.json({type: '*/*'}));
 
-const port = 4500;
+router(app);
+
+
+const port = process.env.PORT || 4500;
 
 // DB CONNECTION
-const mongoDB = 'mongodb://127.0.0.1/larmahue_market';
+const mongoDB = 'mongodb://localhost:27017/larmahue_market';
 
 mongoose.connect(mongoDB);
 
@@ -36,7 +47,6 @@ app.get('/api/productos', (req, res) => {
     res.json(products);
 });
 
-app.listen(
-    port,
-    () => console.log(`Server started on port ${port}`)
-);
+const server = http.createServer(app);
+server.listen(port);
+console.log(`Server listening on port ${port}`);
