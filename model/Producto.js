@@ -7,7 +7,7 @@ const productSchema = new Schema({
     urlImagen: {type:String, lowercase:true},
     descripcion: {type:String},
     stock: {type:Number, required:true},
-    precio: {type:Number, required:true},
+    precio: {type:String, required:true},
     tipo: {type:String, lowercase:true}
 });
 
