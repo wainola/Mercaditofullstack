@@ -1,5 +1,6 @@
 const Authentication = require('./controllers/authentication');
 const passportService = require('./services/passport');
+const UserInfo = require('./controllers/user');
 const passport = require('passport');
 
 // we declare the middleware interceptors
@@ -12,4 +13,6 @@ module.exports = function(app){
     });
     app.post('/signin', requireSignin, Authentication.signin);
     app.post('/signup', Authentication.signup);
+    // GET EMAIL OF THE USER IN ADMIN SECTION
+    app.get('/user', requireAuth, UserInfo.getUserInfo);
 }

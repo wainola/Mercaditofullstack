@@ -6,6 +6,11 @@ class Signout extends Component{
     componentWillMount(){
         this.props.signoutUser();
     }
+    goToRoot(){
+        setTimeout(() => {
+            this.props.history.push('/');
+        }, 4000);
+    }
     render(){
         return(
             <div className="row d-flex justify-content-center">
@@ -14,6 +19,7 @@ class Signout extends Component{
                         <div className="alert alert-info" style={{ marginTop: "10px"}}>
                             Hasta pronto!
                     </div>
+                    {this.goToRoot()}
                 </div>
             </div>
         );

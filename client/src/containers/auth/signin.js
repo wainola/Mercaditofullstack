@@ -80,7 +80,7 @@ class Signin extends Component {
 // TODO: ADDING BETTER VALIDATION FOR EMAIL AND PASSWORD!!!
 function validate(values){
     const errors = {};
-    console.log(values);
+    //console.log(values);
     if(!values.email){
         errors.email = 'Ingrese un correo electrónico valido!';
     }

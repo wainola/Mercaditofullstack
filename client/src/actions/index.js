@@ -34,6 +34,7 @@ export function signinUser({email, password}, callback){
             response => {
                 dispatch({type: AUTH_USER});
                 localStorage.setItem('token', response.data.token);
+                localStorage.setItem('mail_user', email);
                 // THIS IS THE CALLBACK THAT MANAGES THE REDIRECTION
                 callback();
             }
@@ -53,7 +54,12 @@ export function authError(error){
 
 export function signoutUser(){
     localStorage.removeItem('token');
+    localStorage.removeItem('mail_user');
     return{
         type: UNAUTH_USER
     }
+}
+
+export function getUserEmail({email}){
+    
 }
