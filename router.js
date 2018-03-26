@@ -2,6 +2,7 @@ const Authentication = require('./controllers/authentication');
 const passportService = require('./services/passport');
 const UserInfo = require('./controllers/user');
 const passport = require('passport');
+const Productos = require('./controllers/products');
 
 // we declare the middleware interceptors
 const requireAuth = passport.authenticate('jwt', {session:false});
@@ -15,4 +16,6 @@ module.exports = function(app){
     app.post('/signup', Authentication.signup);
     // GET EMAIL OF THE USER IN ADMIN SECTION
     // app.get('/user', requireAuth, UserInfo.getUserInfo);
+    app.get('/productos', requireAuth, Productos.getAllProducts);
+    app.post('/saveProduct', requireAuth, Productos.saveProduct);
 }
