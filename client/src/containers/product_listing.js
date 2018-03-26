@@ -74,7 +74,7 @@ class ProductListing extends Component{
         // if(this.props.productos[0]){
         //     this.renderProductos(this.props.productos[0]);
         // }
-        //console.log(this.props.carroCompra);
+        console.log(this.props.carroCompra);
         return(
             <div>
                 <hr/>

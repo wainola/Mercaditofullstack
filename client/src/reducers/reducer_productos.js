@@ -1,4 +1,4 @@
-import {FETCH_DATA} from '../actions/index';
+import { FETCH_DATA } from '../actions/types';
 
 export default function(state=[], action){
     //console.log(action.payload);

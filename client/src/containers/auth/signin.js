@@ -1,24 +1,22 @@
-import React, {Component} from 'react';
-import {Field, reduxForm} from 'redux-form';
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
-import {loginUser} from '../../actions';
-import './login.css';
+import React, { Component } from 'react';
+import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
+import { Link } from 'react-router-dom';
 
-class Login extends Component{
-    // THIS METHOD IS USED TO RENDER ALL THE FIELDS FROM THE FORM
-    renderField(field){
+class Signin extends Component {
+    renderField(field) {
         // check if the state of the form changes
         const { meta: { touched, error } } = field;
         const className = `form-control ${touched && error ? 'is-invalid' : ''}`;
         console.log(touched, error);
-        return(
+        return (
             <div className="form-group">
                 <label htmlFor="">{field.label}</label>
-                <input 
-                type="text"
-                className={className}
-                {...field.input}
+                <input
+                    type="text"
+                    className={className}
+                    {...field.input}
                 />
                 <div className="text-help invalid-feedback">
                     {
@@ -28,37 +26,41 @@ class Login extends Component{
             </div>
         );
     }
-    // THIS METHOD POST TO THE SERVER
-    onSubmit(values){
+    onSubmitForm({email, password}){
+        // THIS IS THE PLACE WHEN WE TRIGGER THE ACTION
+        // console.log(email, password);
+        this.props.signinUser({email, password}, () => {
+            this.props.history.push('/admin');
+        })
+    }
+    renderAlert(){
 
     }
-    render(){
-
+    render() {
         // HANDLESUBMIT ITS A PROPS OF THE REDUX-FORM
-        const {handleSubmit} = this.props;
-        console.log(this.props);
-        return(
+        const { handleSubmit } = this.props;
+        return (
             <div className="row justify-content-center login">
                 <div className="card">
                     <div className="card-body">
                         <h3>Log in</h3>
-                        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+                        <form onSubmit={handleSubmit(this.onSubmitForm.bind(this))}>
                             <Field
                                 label="Usuario"
-                                name="user"
+                                name="email"
                                 component={this.renderField}
                             />
-                            <Field 
+                            <Field
                                 label="Contraseña"
                                 name="password"
                                 component={this.renderField}
                             />
-                            <button type="submit" className="btn btn-success">Log in</button>
-                            <Link 
-                                to="/" 
+                            <button type="submit" className="btn btn-success">Ingresar</button>
+                            <Link
+                                to="/"
                                 className="btn btn-danger"
-                                style={{ marginLeft: "5px"}}
-                            >Cancel</Link>
+                                style={{ marginLeft: "5px" }}
+                            >Cancelar</Link>
                         </form>
                     </div>
                 </div>
@@ -69,20 +71,18 @@ class Login extends Component{
 
 // THIS FUNCTION VALIDATES THE FORM
 function validate(values){
-    // FOR NOW JUST BASIC VALIDATION
     const errors = {};
-    if(!values.user){
-        errors.user = "Ingrese un usuario valido";
-    }
-    if(!values.password){
-        errors.password = "Ingrese la contraseña correcta";
-    }
     return errors;
 }
 
+// MAPPING STATE TO PROPS
+// function mapStateToProps(state){
+//     return { errorMessage : state.auth.error }
+// }
+
 export default reduxForm({
     validate,
-    form: 'Login'
+    form: 'Signin'
 })(
-    connect(null, {loginUser})(Login)
+    connect(null, actions)(Signin)
 );

@@ -1,8 +1,13 @@
 import axios from 'axios';
+import {
+    FETCH_DATA,
+    ADD_TO_CART,
+    LOGIN_USER,
+    AUTH_USER,
+    AUTH_ERROR
+} from './types';
 
-export const FETCH_DATA = 'FETCH_DATA';
-export const ADD_TO_CART = 'ADD_TO_CART';
-export const LOGIN_USER = 'LOGIN_USER';
+const ROOT_URL = 'http://localhost:4500';
 
 export function fetchProductos(){
     const url = `${window.location.origin}/data/data_productos.json`;
@@ -20,10 +25,27 @@ export function addToCart(producto){
     }
 }
 
-export function loginUser(values){
-    const request = {};
+export function signinUser({email, password}, callback){
+    // USING REDUX THUNK TO RETURN A FUNCTION THAT DISPATCH
+    return function(dispatch){
+        axios.post(`${ROOT_URL}/signin`, {email, password})
+        .then(
+            response => {
+                dispatch({type: AUTH_USER});
+                localStorage.setItem('token', response.data.token);
+                // THIS IS THE CALLBACK THAT MANAGES THE REDIRECTION
+                callback();
+            }
+        )
+        // .catch(() => {
+        //     dispatch(authError('El usuario no existe!'));
+        // });
+    }
+}
+
+export function authError(error){
     return{
-        type: LOGIN_USER,
-        payload: request
+        type: AUTH_ERROR,
+        payload: error
     }
 }

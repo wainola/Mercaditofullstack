@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const router = require('./router');
+const cors = require('cors');
 
 // Controllers
 const GetProductos = require('./controllers/products');
@@ -12,6 +13,7 @@ const GetProductos = require('./controllers/products');
 const app = express();
 // LOGING LIBRARY
 app.use(morgan('combined'));
+app.use(cors());
 // PARSING ALL THE INCOMING REQ AS JSON
 app.use(bodyParser.json({type: '*/*'}));
 
