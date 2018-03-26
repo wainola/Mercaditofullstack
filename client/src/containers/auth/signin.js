@@ -49,7 +49,7 @@ class Signin extends Component {
             <div className="row justify-content-center login">
                 <div className="card">
                     <div className="card-body">
-                        <h3>Ingreso</h3>
+                        <h3>Ingreso usuarios</h3>
                         <form onSubmit={handleSubmit(this.onSubmitForm.bind(this))}>
                             <Field
                                 label="Usuario"
