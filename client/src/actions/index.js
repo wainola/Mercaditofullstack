@@ -59,7 +59,3 @@ export function signoutUser(){
         type: UNAUTH_USER
     }
 }
-
-export function getUserEmail({email}){
-    
-}

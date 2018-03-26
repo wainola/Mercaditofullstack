@@ -1,23 +1,22 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import NavegacionAdmin from './components/navbar';
+import Productos from './components/productos';
 
 class Admin extends Component{
-    componentWillMount(){
-        const email = localStorage.getItem('mail_user');
-        console.log(email);
-    }
     render(){
         console.log(this.props.authenticated);
         return(
-            <div className="container-fluid">
+            <div>
+                {/* NAVBAR RENDER */}
                 <div className="row">
-                    <div className="col float-left">
-                        <h3>Sección Admin</h3>
-                    </div>
-                    <div className="co">
+                    <div className="container-fluid">
                         <NavegacionAdmin />
                     </div>
+                </div>
+                {/* PRODUCTS RENDER */}
+                <div className="row">
+                    <Productos />
                 </div>
             </div>
         );
