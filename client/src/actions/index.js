@@ -4,7 +4,8 @@ import {
     ADD_TO_CART,
     LOGIN_USER,
     AUTH_USER,
-    AUTH_ERROR
+    AUTH_ERROR,
+    UNAUTH_USER
 } from './types';
 
 const ROOT_URL = 'http://localhost:4500';
@@ -47,5 +48,12 @@ export function authError(error){
     return{
         type: AUTH_ERROR,
         payload: error
+    }
+}
+
+export function signoutUser(){
+    localStorage.removeItem('token');
+    return{
+        type: UNAUTH_USER
     }
 }
