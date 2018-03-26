@@ -5,7 +5,8 @@ import Productos from './components/productos';
 
 class Admin extends Component{
     render(){
-        console.log(this.props.authenticated);
+        console.log("admin");
+        console.log(this.props);
         return(
             <div>
                 {/* NAVBAR RENDER */}

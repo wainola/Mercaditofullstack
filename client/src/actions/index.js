@@ -5,7 +5,8 @@ import {
     LOGIN_USER,
     AUTH_USER,
     AUTH_ERROR,
-    UNAUTH_USER
+    UNAUTH_USER,
+    TOOGLE_SIDEBAR
 } from './types';
 
 const ROOT_URL = 'http://localhost:4500';
@@ -57,5 +58,13 @@ export function signoutUser(){
     localStorage.removeItem('mail_user');
     return{
         type: UNAUTH_USER
+    }
+}
+
+// UTILITY FUNCTION FOR THE SIDEBAR
+export function toggleSidebar(toggle){
+    return{
+        type: TOOGLE_SIDEBAR,
+        payload: toggle
     }
 }

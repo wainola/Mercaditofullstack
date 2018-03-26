@@ -13,6 +13,8 @@ import {
     DropdownMenu,
     DropdownItem
 } from 'reactstrap';
+import { connect } from 'react-redux';
+import * as actions from '../../../actions/index';
 
 class NavegacionAdmin extends Component{
     constructor(props){
@@ -31,6 +33,10 @@ class NavegacionAdmin extends Component{
             isOpen: !this.state.isOpen
         });
     }
+    // MANIPULATING THE SIDEBAR ON THIS MENU
+    toggleSideBar(){
+        this.props.toggleSidebar(this.props.toggle);
+    }
     render(){
         console.log(this.state.isOpen);
         return(
@@ -40,6 +46,11 @@ class NavegacionAdmin extends Component{
                     <NavbarToggler onClick={this.toggle.bind(this)} className="mr-2" />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav navbar className="ml-auto">
+                            <NavItem>
+                                <NavLink onClick={this.toggleSideBar.bind(this)}>
+                                    Menu
+                                </NavLink>
+                            </NavItem>
                             <NavItem>
                                 <NavLink href="">{this.state.email}</NavLink>
                             </NavItem>
@@ -53,6 +64,9 @@ class NavegacionAdmin extends Component{
         );
     }
 }
+// MAPPING FOR THE MANIPULATION OF THE SIDEBAR
+function mapStateToProps(state){
+    return { toggle: !state.toggle.toggle }
+}
 
-
-export default NavegacionAdmin;
+export default connect(mapStateToProps, actions)(NavegacionAdmin);

@@ -2,42 +2,38 @@ import React, { Component } from 'react';
 import { 
     Nav, 
     NavItem, 
-    NavLink,
-    Button
+    NavLink
 } from 'reactstrap';
 import './style.css';
+import { connect } from 'react-redux';
+import * as actions from '../../../../actions/index';
+import { Link } from 'react-router-dom';
+import AddProductos from '../secciones/add_productos';
 
 class SideBar extends Component {
     constructor(props){
         super(props);
-        this.state = {
-            active: false
-        }
     }
     toggleClass(){
-        console.log('toggle');
-        this.setState({
-            active: !this.state.active
-        });
+        this.props.toggleSidebar(this.props.toggle);
     }
     render(){
-        console.log(this.state);
+        console.log("sidebar");
+        console.log(this.props);
         return(
             <div className="wrapper">
-                <Nav id="sidebar" className={this.state.active ? 'active' : ''}>
-                    <div className="sidebar-header">
-                        <h3>Collapsible Sidebar</h3>
-                    </div>
+                <Nav id="sidebar" className={!this.props.toggle ? 'active' : ''}>
                     <NavItem>
-                        <NavLink href="">Añadir Productos</NavLink>
+                        <Link to='/add_productos'>Añadir Productos</Link>
                     </NavItem>
                 </Nav>
-                <div id="content">
-                    <Button type='button' className="btn btn-success" onClick={this.toggleClass.bind(this)}>Toggle Sidebar</Button>
-                </div>
             </div>
         );
     }
 }
 
-export default SideBar;
+function mapStateToProps(state){
+    return { toggle: !state.toggle.toggle }
+}
+
+export default connect(mapStateToProps)(SideBar);
