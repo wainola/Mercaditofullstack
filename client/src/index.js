@@ -8,9 +8,17 @@ import App from './App';
 import reducers from './reducers';
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { AUTH_USER } from './actions/types';
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk, reduxPromise)(createStore);
 const store = createStoreWithMiddleware(reducers);
+
+const token = localStorage.getItem('token');
+
+// IF TOKEN EXISTS, THEN DISPATCH AUTH_USER
+if(token){
+    store.dispatch({type: AUTH_USER});
+}
 
 window.store = createStoreWithMiddleware(reducers);
 
