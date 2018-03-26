@@ -37,9 +37,9 @@ export function signinUser({email, password}, callback){
                 callback();
             }
         )
-        // .catch(() => {
-        //     dispatch(authError('El usuario no existe!'));
-        // });
+        .catch(() => {
+            dispatch(authError('El usuario no existe!'));
+        });
     }
 }
 

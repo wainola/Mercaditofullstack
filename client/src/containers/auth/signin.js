@@ -9,12 +9,12 @@ class Signin extends Component {
         // check if the state of the form changes
         const { meta: { touched, error } } = field;
         const className = `form-control ${touched && error ? 'is-invalid' : ''}`;
-        console.log(touched, error);
+        // console.log(touched, error);
         return (
             <div className="form-group">
                 <label htmlFor="">{field.label}</label>
                 <input
-                    type="text"
+                    type={field.label === 'Contraseña' ? 'password' : 'text'}
                     className={className}
                     {...field.input}
                 />
@@ -34,7 +34,13 @@ class Signin extends Component {
         })
     }
     renderAlert(){
-
+        if(this.props.errorMessage){
+            return(
+                <div className="alert alert-danger">
+                    <strong>Error!</strong> {this.props.errorMessage}
+                </div>
+            );
+        }
     }
     render() {
         // HANDLESUBMIT ITS A PROPS OF THE REDUX-FORM
@@ -43,7 +49,7 @@ class Signin extends Component {
             <div className="row justify-content-center login">
                 <div className="card">
                     <div className="card-body">
-                        <h3>Log in</h3>
+                        <h3>Ingreso</h3>
                         <form onSubmit={handleSubmit(this.onSubmitForm.bind(this))}>
                             <Field
                                 label="Usuario"
@@ -61,6 +67,7 @@ class Signin extends Component {
                                 className="btn btn-danger"
                                 style={{ marginLeft: "5px" }}
                             >Cancelar</Link>
+                            {this.renderAlert()}
                         </form>
                     </div>
                 </div>
@@ -70,19 +77,27 @@ class Signin extends Component {
 }
 
 // THIS FUNCTION VALIDATES THE FORM
+// TODO: ADDING BETTER VALIDATION FOR EMAIL AND PASSWORD!!!
 function validate(values){
     const errors = {};
+    console.log(values);
+    if(!values.email){
+        errors.email = 'Ingrese un correo electrónico valido!';
+    }
+    if(!values.password){
+        errors.password = 'Ingrese su contraseña!';
+    }
     return errors;
 }
 
 // MAPPING STATE TO PROPS
-// function mapStateToProps(state){
-//     return { errorMessage : state.auth.error }
-// }
+function mapStateToProps(state){
+    return { errorMessage : state.auth.error }
+}
 
 export default reduxForm({
     validate,
     form: 'Signin'
 })(
-    connect(null, actions)(Signin)
+    connect(mapStateToProps, actions)(Signin)
 );
