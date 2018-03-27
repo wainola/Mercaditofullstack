@@ -20,10 +20,11 @@ class AddProductos extends Component{
     onSubmitForm(values){
         // console.log(values);
         this.props.addNewProduct({product: values});
+        this.props.reset();
+        console.log(this.props.productos);
     }
     render(){
         const { handleSubmit } = this.props;
-        console.log(this.props);
         return(
             <div className="justify-content-center mt-3">
                 <h3>Añadir Productos</h3>

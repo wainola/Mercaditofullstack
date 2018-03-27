@@ -6,7 +6,7 @@ export default function(state=[], action){
         case FETCH_DATA:
             return [action.payload.data, ...state];
         case ADD_NEW_PRODUCT:
-            return { ...state, data: action.payload };
+            return [ ...state, action.payload.data ]
     }
     return state;
 }
