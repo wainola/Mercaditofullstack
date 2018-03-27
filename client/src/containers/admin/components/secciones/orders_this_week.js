@@ -4,7 +4,7 @@ class OrderThisWeek extends Component{
     render(){
         return(
             <div>
-                Order for this week
+                <h1>Orders this week</h1>
             </div>
         );
     }
