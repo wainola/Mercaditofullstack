@@ -47,11 +47,6 @@ class NavegacionAdmin extends Component{
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav navbar className="ml-auto">
                             <NavItem>
-                                <NavLink onClick={this.toggleSideBar.bind(this)}>
-                                    Menu
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
                                 <NavLink href="">{this.state.email}</NavLink>
                             </NavItem>
                             <NavItem>

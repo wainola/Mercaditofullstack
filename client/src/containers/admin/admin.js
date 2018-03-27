@@ -17,7 +17,6 @@ class Admin extends Component{
                 </div>
                 {/* PRODUCTS RENDER */}
                 <div className="row">
-                    <Productos />
                 </div>
             </div>
         );
