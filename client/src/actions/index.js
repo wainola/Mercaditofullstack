@@ -6,8 +6,10 @@ import {
     AUTH_USER,
     AUTH_ERROR,
     UNAUTH_USER,
-    TOOGLE_SIDEBAR
+    TOOGLE_SIDEBAR,
+    ADD_NEW_PRODUCT
 } from './types';
+import Axios from 'axios';
 
 const ROOT_URL = 'http://localhost:4500';
 
@@ -61,10 +63,15 @@ export function signoutUser(){
     }
 }
 
-// UTILITY FUNCTION FOR THE SIDEBAR
-export function toggleSidebar(toggle){
+export function addNewProduct({product}){
+    console.log({product});
+    const { nombre, urlImagen, descripcion, stock, precio } = product;
+    console.log(stock);
+    const request = axios.post(`${ROOT_URL}/saveProduct`, product, {
+        headers: {authorization: localStorage.getItem('token')}
+    });
     return{
-        type: TOOGLE_SIDEBAR,
-        payload: toggle
+        type: ADD_NEW_PRODUCT,
+        payload: request
     }
 }

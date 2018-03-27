@@ -28,12 +28,7 @@ class NavegacionAdmin extends Component{
             isOpen: !this.state.isOpen
         });
     }
-    // MANIPULATING THE SIDEBAR ON THIS MENU
-    toggleSideBar(){
-        this.props.toggleSidebar(this.props.toggle);
-    }
     render(){
-        console.log(this.state.isOpen);
         return(
             <div>
                 <Navbar color="faded" light expand="md" className="navbar-dark bg-dark">
@@ -54,9 +49,5 @@ class NavegacionAdmin extends Component{
         );
     }
 }
-// MAPPING FOR THE MANIPULATION OF THE SIDEBAR
-function mapStateToProps(state){
-    return { toggle: !state.toggle.toggle }
-}
 
-export default connect(mapStateToProps, actions)(NavegacionAdmin);
+export default NavegacionAdmin

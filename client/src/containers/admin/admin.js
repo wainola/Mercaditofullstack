@@ -6,8 +6,6 @@ import { Route } from 'react-router-dom';
 
 class Admin extends Component{
     render(){
-        console.log("admin");
-        console.log(this.props);
         return(
             <div>
                 {/* NAVBAR RENDER */}

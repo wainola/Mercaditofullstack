@@ -9,8 +9,6 @@ class NavMenu extends Component{
         super(props);
     }
     render(){
-        console.log('navbar menu');
-        console.log(this.props);
         return(
             <div>
                 <div className="row justify-content-center">
