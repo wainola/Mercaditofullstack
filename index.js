@@ -46,10 +46,15 @@ db.on('error', console.error.bind(console, 'MONGODB CONNECTION ERROR:'));
 app.use(express.static(path.join(__dirname, '/client/build')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
-})
+});
+
 app.get('/api/productos', (req, res) => {
     const products = GetProductos();
     res.json(products);
+});
+
+app.post('/upload', (req, res, next) => {
+    res.json({"data": "data server"});
 });
 
 const server = http.createServer(app);
