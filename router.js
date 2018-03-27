@@ -3,6 +3,8 @@ const passportService = require('./services/passport');
 const UserInfo = require('./controllers/user');
 const passport = require('passport');
 const Productos = require('./controllers/products');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 // we declare the middleware interceptors
 const requireAuth = passport.authenticate('jwt', {session:false});
@@ -18,4 +20,8 @@ module.exports = function(app){
     // app.get('/user', requireAuth, UserInfo.getUserInfo);
     app.get('/productos', requireAuth, Productos.getAllProducts);
     app.post('/saveProduct', requireAuth, Productos.saveProduct);
+    app.post('/addProd', function(req, res){
+        // console.log(req);
+        res.json({test: 'succes'});
+    });
 }

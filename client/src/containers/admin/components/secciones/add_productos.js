@@ -4,6 +4,7 @@ import * as actions from '../../../../actions';
 import { connect } from 'react-redux'; 
 import { Button } from 'reactstrap';
 import { FormGroup, Label, Input } from 'reactstrap';
+import axios from 'axios';
 
 
 class AddProductos extends Component{
@@ -41,12 +42,21 @@ class AddProductos extends Component{
         this.setState({selectedFile: file});
     }
     onSubmitForm(values){
+        const data = new FormData();
+        data.append('file', this.state.selectedFile);
+        data.append('datos', values);
         // this.props.reset();
         // console.log(this.props.productos);
-        console.log(this.state.selectedFile);
-        values.files = this.state.selectedFile;
-        console.log(values);
-        this.props.addNewProduct({product: values});
+        for(var p of data){
+            console.log(p);
+        };
+        const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+        fetch('http://localhost:4500/addProd', {
+            method: 'POST',
+            body: data
+        })
+        .then(response => console.log(response));
+        //this.props.addNewProduct({product: values});
     }
     render(){
         const { handleSubmit } = this.props;
@@ -62,7 +72,7 @@ class AddProductos extends Component{
                     {/* SPECIAL CASE FOR THE FILE INPUT */}
                     <div className="form-group">
                         <label htmlFor="">Imagen</label>
-                        <input type="file" className='form-control.file' onChange={this.fileChangeHandler.bind(this)}/>
+                        <input name='imagen' type="file" className='form-control.file' onChange={this.fileChangeHandler.bind(this)}/>
                     </div>
                     <Field
                         label="Descripcion"
