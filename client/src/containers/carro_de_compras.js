@@ -21,7 +21,6 @@ class CarroCompra extends Component{
         }
     }
     render(){
-        console.log(this.props);
         return(
             // Always sticky-top works on container elements like div
             <div className="sticky-top">

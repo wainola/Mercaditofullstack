@@ -18,7 +18,7 @@ class Admin extends Component{
                 {/* PRODUCTS RENDER */}
                 <div className="row">
                     <div className="container">
-                        <NavMenu />
+                        <NavMenu match={this.props.match}/>
                     </div>
                 </div>
             </div>
