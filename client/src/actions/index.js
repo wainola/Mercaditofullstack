@@ -2,14 +2,11 @@ import axios from 'axios';
 import {
     FETCH_DATA,
     ADD_TO_CART,
-    LOGIN_USER,
     AUTH_USER,
     AUTH_ERROR,
     UNAUTH_USER,
-    TOOGLE_SIDEBAR,
     ADD_NEW_PRODUCT
 } from './types';
-import Axios from 'axios';
 
 const ROOT_URL = 'http://localhost:4500';
 
@@ -65,8 +62,8 @@ export function signoutUser(){
 
 export function addNewProduct({product}){
     console.log({product});
-    const { nombre, urlImagen, descripcion, stock, precio } = product;
-    console.log(stock);
+    // const { nombre, urlImagen, descripcion, stock, precio } = product;
+    // console.log(stock);
     const request = axios.post(`${ROOT_URL}/saveProduct`, product, {
         headers: {authorization: localStorage.getItem('token')}
     });

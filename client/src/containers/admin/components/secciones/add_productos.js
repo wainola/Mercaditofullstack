@@ -3,25 +3,50 @@ import { reduxForm, Field } from 'redux-form';
 import * as actions from '../../../../actions';
 import { connect } from 'react-redux'; 
 import { Button } from 'reactstrap';
+import { FormGroup, Label, Input } from 'reactstrap';
+
 
 class AddProductos extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            selectedFile: null
+        };
+    }
     renderTextField(field){
-        return(
-            <div className="form-group">
-                <label htmlFor="">{field.label}</label>
-                <input 
-                    type="text"
-                    className='form-control'
-                    {...field.input}
-                />
-            </div>
-        );
+        if(field.label !== 'Descripcion' && field.label !== 'Imagen'){
+            return ( 
+                <div className = "form-group" >
+                    <label htmlFor = "" >{field.label}</label> 
+                    <input 
+                        type = "text"
+                        className = 'form-control' 
+                        { ...field.input}/> 
+                </div>
+            );
+        }
+        else if (field.label === 'Descripcion'){
+            return(
+                <div className="form-group">
+                    <label htmlFor="">{field.label}</label>
+                    <textarea cols="30" rows="10" className='form-control'
+                        {...field.input}></textarea>
+                </div>
+            );
+        }
+    }
+    fileChangeHandler(event){
+        console.log('file change handler')
+        const file = [ ...event.target.files ];
+        this.setState({selectedFile: file});
     }
     onSubmitForm(values){
-        // console.log(values);
-        this.props.addNewProduct({product: values});
-        this.props.reset();
-        console.log(this.props.productos);
+        // this.props.addNewProduct({product: values});
+        // this.props.reset();
+        // console.log(this.props.productos);
+        console.log(this.state.selectedFile);
+        values.files = this.state.selectedFile;
+        console.log(values);
     }
     render(){
         const { handleSubmit } = this.props;
@@ -34,11 +59,11 @@ class AddProductos extends Component{
                         name="nombre"
                         component={this.renderTextField}
                         />
-                    <Field
-                        label="Imagen"
-                        name="urlImagen"
-                        component={this.renderTextField}
-                    />
+                    {/* SPECIAL CASE FOR THE FILE INPUT */}
+                    <div className="form-group">
+                        <label htmlFor="">Imagen</label>
+                        <input type="file" className='form-control.file' onChange={this.fileChangeHandler.bind(this)}/>
+                    </div>
                     <Field
                         label="Descripcion"
                         name="descripcion"

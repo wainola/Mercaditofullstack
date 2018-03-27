@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { Nav, NavItem, NavLink } from 'reactstrap';
-import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import OrderThisWeek from './secciones/orders_this_week';
 import AddProductos from './secciones/add_productos';
 
 class NavMenu extends Component{
-    constructor(props){
-        super(props);
-    }
     render(){
         return(
             <div>

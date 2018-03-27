@@ -8,8 +8,6 @@ import {
     NavItem,
     NavLink
 } from 'reactstrap';
-import { connect } from 'react-redux';
-import * as actions from '../../../actions/index';
 
 class NavegacionAdmin extends Component{
     constructor(props){
