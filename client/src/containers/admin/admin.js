@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import NavegacionAdmin from './components/navbar';
-import Productos from './components/productos';
+import NavMenu from './components/nav_menu';
 
 class Admin extends Component{
     render(){
@@ -17,6 +17,9 @@ class Admin extends Component{
                 </div>
                 {/* PRODUCTS RENDER */}
                 <div className="row">
+                    <div className="container">
+                        <NavMenu />
+                    </div>
                 </div>
             </div>
         );
