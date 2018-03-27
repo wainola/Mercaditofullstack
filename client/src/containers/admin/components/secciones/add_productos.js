@@ -41,12 +41,12 @@ class AddProductos extends Component{
         this.setState({selectedFile: file});
     }
     onSubmitForm(values){
-        // this.props.addNewProduct({product: values});
         // this.props.reset();
         // console.log(this.props.productos);
         console.log(this.state.selectedFile);
         values.files = this.state.selectedFile;
         console.log(values);
+        this.props.addNewProduct({product: values});
     }
     render(){
         const { handleSubmit } = this.props;
