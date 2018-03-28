@@ -57,7 +57,10 @@ class AddProductos extends Component{
             }
         })
         .then(response => response.json())
-        .then(data => console.log(data));
+        .then(data => {
+            console.log(data);
+            this.props.reset();
+        });
         //this.props.addNewProduct({product: values});
     }
     render(){
