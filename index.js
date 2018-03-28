@@ -43,6 +43,7 @@ db.on('error', console.error.bind(console, 'MONGODB CONNECTION ERROR:'));
 // p1.save().then(() => console.log('Registro Guardado'));
 
 app.use(express.static(path.join(__dirname, '/client/build')));
+// app.use('/public', express.static(__dirname + '/public'));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });

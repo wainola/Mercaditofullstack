@@ -56,7 +56,8 @@ class AddProductos extends Component{
                 'Authorization': localStorage.getItem('token')
             }
         })
-        .then(response => console.log(response));
+        .then(response => response.json())
+        .then(data => console.log(data));
         //this.props.addNewProduct({product: values});
     }
     render(){
