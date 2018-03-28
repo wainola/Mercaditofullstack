@@ -5,33 +5,39 @@ exports.getAllProducts = function(req, res, next){
 }
 
 exports.saveProduct = function(req, res, next){
-    const nombre = req.body.nombre;
-    const urlImagen = req.body.urlImagen;
-    const descripcion = req.body.descripcion;
-    const stock = req.body.stock;
-    const precio = req.body.precio;
-    const tipo = req.body.tipo;
+    let data = JSON.parse(req.body.datos);
+    const nombre = data.nombre;
+    const descripcion = data.descripcion;
+    const stock = data.stock;
+    const precio = data.precio;
+    const tipo = data.tipo;
+    let fileImage = req.files.file;
+
+    console.log(fileImage);
+    console.log(JSON.parse(req.body.datos));
+    console.log(`precio es ${precio}`)
+    res.send({data: data});
 
     // SEARCHING IF THE PRODUCT ALREADY EXISTS
-    Producto.findOne({nombre:nombre}, function(err, existingProduct){
-        if(err) { return next(err); }
-        if(existingProduct){
-            return res.status(422).send({error: 'Producto ya existe'});
-        }
-        const producto = new Producto({
-            nombre: nombre,
-            urlImagen: urlImagen,
-            descripcion: descripcion,
-            stock: stock,
-            precio: precio,
-            tipo: tipo
-        });
+    // Producto.findOne({nombre:nombre}, function(err, existingProduct){
+    //     if(err) { return next(err); }
+    //     if(existingProduct){
+    //         return res.status(422).send({error: 'Producto ya existe'});
+    //     }
+    //     const producto = new Producto({
+    //         nombre: nombre,
+    //         urlImagen: urlImagen,
+    //         descripcion: descripcion,
+    //         stock: stock,
+    //         precio: precio,
+    //         tipo: tipo
+    //     });
 
-        producto.save(function(err){
-            if(err){
-                return next(err);
-            }
-            res.json({saved: 'guardado con exito!'});
-        });
-    });
+    //     producto.save(function(err){
+    //         if(err){
+    //             return next(err);
+    //         }
+    //         res.json({saved: 'guardado con exito!'});
+    //     });
+    // });
 }

@@ -15,13 +15,12 @@ const app = express();
 // LOGING LIBRARY
 app.use(morgan('combined'));
 // PARSING ALL THE INCOMING REQ AS JSON
-app.use(bodyParser.json({type: '*/*'}));
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(fileUpload());
 
 router(app);
-
 
 const port = process.env.PORT || 4500;
 
@@ -54,7 +53,8 @@ app.get('/api/productos', (req, res) => {
 });
 
 app.post('/upload', (req, res, next) => {
-    res.json({"data": "data server"});
+    console.log(req.files);
+    res.send({msg: 'file uploaded'});
 });
 
 const server = http.createServer(app);

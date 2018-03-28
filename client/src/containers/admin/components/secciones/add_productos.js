@@ -43,17 +43,18 @@ class AddProductos extends Component{
     }
     onSubmitForm(values){
         const data = new FormData();
-        data.append('file', this.state.selectedFile);
-        data.append('datos', values);
+        data.append('file', this.uploadInput.files[0]);
+        data.append('datos', JSON.stringify(values));
+        console.log(this.fileName.value);
         // this.props.reset();
-        // console.log(this.props.productos);
-        for(var p of data){
-            console.log(p);
-        };
+        //console.log(this.props.productos);
         const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-        fetch('http://localhost:4500/addProd', {
+        fetch('http://localhost:4500/saveProduct', {
             method: 'POST',
-            body: data
+            body: data,
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
         })
         .then(response => console.log(response));
         //this.props.addNewProduct({product: values});
@@ -68,11 +69,12 @@ class AddProductos extends Component{
                         label="Nombre"
                         name="nombre"
                         component={this.renderTextField}
+                        ref={(ref) => { this.fileName = ref }}
                         />
                     {/* SPECIAL CASE FOR THE FILE INPUT */}
                     <div className="form-group">
                         <label htmlFor="">Imagen</label>
-                        <input name='imagen' type="file" className='form-control.file' onChange={this.fileChangeHandler.bind(this)}/>
+                        <input name='imagen' type="file" className='form-control.file' onChange={this.fileChangeHandler.bind(this)} ref={(ref) => { this.uploadInput = ref }}/>
                     </div>
                     <Field
                         label="Descripcion"

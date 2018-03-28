@@ -20,8 +20,4 @@ module.exports = function(app){
     // app.get('/user', requireAuth, UserInfo.getUserInfo);
     app.get('/productos', requireAuth, Productos.getAllProducts);
     app.post('/saveProduct', requireAuth, Productos.saveProduct);
-    app.post('/addProd', function(req, res){
-        // console.log(req);
-        res.json({test: 'succes'});
-    });
 }
