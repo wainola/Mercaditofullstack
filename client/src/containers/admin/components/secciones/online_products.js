@@ -14,9 +14,22 @@ class OnlineProducts extends Component{
    }
     render(){
         console.log(this.props.productosPersistidos);
+        if(this.props.productosPersistidos.resultApi){
+            let nombre = this.props.productosPersistidos.resultApi.map((item) => item.nombre);
+            console.log(nombre);
+        }
         return(
             <div>
                 <h1>Productos en la página</h1>
+                {
+                    this.props.productosPersistidos.resultApi
+                    ?
+                    <div className="card">
+                        {this.props.productosPersistidos.resultApi.map((item) => this.renderProductos)}
+                    </div>
+                    :
+                    <p>Cargando...</p>
+                }
             </div>
         );
     }

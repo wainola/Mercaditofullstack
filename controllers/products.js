@@ -1,7 +1,11 @@
 const Producto = require('../model/Producto');
 
 exports.getAllProducts = function(req, res, next){
-    res.send({products: 'todos los productos'});
+    const productos = Producto.find({}, function(err, productos){
+        if(err){ return next(err); }
+        res.send(productos);
+    });
+
 }
 
 exports.saveProduct = function(req, res, next){
