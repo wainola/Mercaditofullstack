@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class OrdersThisWeek extends Component{
+class OrdersHistory extends Component{
     render(){
         return(
             <div>
-                <h1>Ordenes de la semana</h1>
+                <h2>Histórico de órdenes</h2>
             </div>
         );
     }
 }
 
-export default OrdersThisWeek;
+export default OrdersHistory;

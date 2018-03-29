@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class OrdersThisWeek extends Component{
+class OnlineProducts extends Component{
     render(){
         return(
             <div>
-                <h1>Ordenes de la semana</h1>
+                <h1>Productos Online</h1>
             </div>
         );
     }
 }
 
-export default OrdersThisWeek;
+export default OnlineProducts;
