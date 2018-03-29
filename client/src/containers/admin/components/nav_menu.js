@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Nav, NavItem, NavLink } from 'reactstrap';
+import { Nav, NavItem } from 'reactstrap';
 import { Route, Link } from 'react-router-dom';
 import OrderThisWeek from './secciones/orders_this_week';
 import AddProductos from './secciones/add_productos';
@@ -19,7 +19,7 @@ class NavMenu extends Component{
                             <Link to={`${this.props.match.url}/addProducts`} className='nav-link'>Añadir productos</Link>
                         </NavItem>
                         <NavItem>
-                            <Link to={`${this.props.match.url}/onlineProducts`} className='nav-link'>Productos online</Link>
+                            <Link to={`${this.props.match.url}/onlineProducts`} className='nav-link'>Productos en la página</Link>
                         </NavItem>
                         <NavItem>
                             <Link to={`${this.props.match.url}/ordersHistory`} className='nav-link'>Histórico de órdenes</Link>

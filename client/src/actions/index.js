@@ -5,7 +5,8 @@ import {
     AUTH_USER,
     AUTH_ERROR,
     UNAUTH_USER,
-    ADD_NEW_PRODUCT
+    ADD_NEW_PRODUCT,
+    FETCH_PRODUCTS
 } from './types';
 
 const ROOT_URL = 'http://localhost:4500';
@@ -74,5 +75,18 @@ export function addNewProduct({product}){
     return{
         type: ADD_NEW_PRODUCT,
         payload: request
+    }
+}
+
+export function fetchProducts(){
+    return function(dispatch){
+        axios.get(`${ROOT_URL}/getAllProducts`, {
+            headers: {
+                authorization: localStorage.getItem('token')
+            }
+        })
+        .then(response => {
+                dispatch({type: FETCH_PRODUCTS, payload: response});
+        });
     }
 }
