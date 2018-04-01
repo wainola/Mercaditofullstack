@@ -1,5 +1,6 @@
 const Producto = require('../model/Producto');
 
+
 exports.getAllProducts = function(req, res, next){
     const productos = Producto.find({}, function(err, productos){
         if(err){ return next(err); }
@@ -43,14 +44,15 @@ exports.saveProduct = function(req, res, next){
                 return next(err);
             }
             // PROCESSING IMAGE FILE, MOVING TO THE PUBLIC DIRECTORY
-            fileImage.mv(`public/${fileImage.name}`, function (err) {
+            let urlCatalogo = 'client/public/catalogo_imagenes/';
+            fileImage.mv(`${urlCatalogo}${fileImage.name}`, function (err) {
                 console.log("Entre MV function");
                 if (err) {
                     console.log("Error");
                     return res.status(500).send(err);
                 }
+                res.json({ saved: 'guardado con exito!', file: `${urlCatalogo}${fileImage.name}` });
             });
-            res.json({ saved: 'guardado con exito!', file: `public/${fileImage.name}`});
         });
     });
 }
