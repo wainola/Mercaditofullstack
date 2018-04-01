@@ -12,6 +12,22 @@ class OnlineProducts extends Component{
    componentDidMount(){
        this.props.fetchProducts();
    }
+   renderProductos(producto){
+       console.log(producto)
+       return(
+           <div className="card border-info" key={producto._id}>
+               <img src={`./${producto.urlImagen}`} alt="" className="img-fluid" />
+               <img src={`${window.location.origin}/pimentones.jpg`} alt="" className="img-fluid"/>
+               <div className="card-body">
+                   <h4 className="card-title">
+                    {producto.nombre}
+                   </h4>
+                   <p className="card-text">{producto.descripcion}</p>
+                   <p className="card-text">Precio por unidad: {producto.precio}</p>
+               </div>
+           </div>
+       );
+   }
     render(){
         console.log(this.props.productosPersistidos);
         if(this.props.productosPersistidos.resultApi){
@@ -25,7 +41,7 @@ class OnlineProducts extends Component{
                     this.props.productosPersistidos.resultApi
                     ?
                     <div className="card">
-                        {this.props.productosPersistidos.resultApi.map((item) => this.renderProductos)}
+                        {this.props.productosPersistidos.resultApi.map(this.renderProductos)}
                     </div>
                     :
                     <p>Cargando...</p>
