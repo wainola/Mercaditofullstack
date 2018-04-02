@@ -17,8 +17,19 @@ class ProductListing extends Component{
         this.handleChange = this.handleChange.bind(this);
         this.addToCart = this.addToCart.bind(this);
     }
+    componentWillReceiveProps(){
+    }
+    componentDidUpdate(){
+        console.log('carro actualizado');
+        if (this.props.carroCompra.length > 1) {
+            // console.log('elementos en carro de compra');
+            // console.log(this.props.carroCompra);
+            this.props.carroCompra.forEach((item) => {
+                console.log(item);
+            })
+        }
+    }
     handleChange(event){
-        console.log('handle cantidad');
         console.log(event.target.value);
         this.setState({cantidad: event.target.value});
         console.log(this.state.cantidad);
@@ -26,7 +37,7 @@ class ProductListing extends Component{
     // METHOD THAT HANDLES THE CART FROM THE MAIN PAGE
     addToCart(event){
         event.preventDefault();
-        console.log(event.target);
+        //console.log(event.target);
         if(event.target[0].value === 'Cantidad'){
             swal({
                 title: 'No puede seleccionar cero cantidad de productos!',
@@ -34,9 +45,9 @@ class ProductListing extends Component{
             });
         }
         else{
-            console.log(event.target.dataset);
+            //console.log(event.target.dataset);
             this.props.addToCart({ product_select: JSON.parse(event.target.dataset.producto), cantidad: this.state.cantidad, id: JSON.parse(event.target.dataset.producto).id });
-            console.log(this.props.carroCompra);
+            //console.log(this.props.carroCompra);
         }
     }
     renderProductos(productos){
@@ -88,8 +99,8 @@ class ProductListing extends Component{
         // if(this.props.productos[0]){
         //     this.renderProductos(this.props.productos[0]);
         // }
-        console.log(this.props.carroCompra);
-        console.log(this.props);
+        // console.log(this.props.carroCompra);
+        // console.log(this.props);
         return(
             <div>
                 <hr/>

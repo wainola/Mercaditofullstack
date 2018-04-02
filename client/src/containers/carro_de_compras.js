@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ListGroup, ListGroupItem } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ListGroup, ListGroupItem, Alert } from 'reactstrap';
 import * as actions from '../actions/index';
 import Checkout from './checkout';
 import { Route, Link } from 'react-router-dom';
+import _ from 'lodash';
 
 class CarroCompra extends Component{
     constructor(props){
@@ -60,9 +61,28 @@ class CarroCompra extends Component{
             </ListGroupItem>
         );
     }
+    renderTotal(){
+        console.log(this.props.carroCompra);
+        if(this.props.carroCompra > 0){
+            console.log('render total');
+            let precios_cantidad = _.map(this.props.carroCompra, item => {
+                return { precio: parseInt(item.product_select.precio), cantidad: parseInt(item.cantidad) };
+            });
+            console.log(_.reduce(precios_cantidad, (sum, n) => sum + n.precio * n.cantidad, 0));
+        }
+    }
     render(){
         // console.log('carro de compra');
         // console.log(this.props.carroCompra);
+        let valorCompra = 0;
+        if(this.props.carroCompra.length > 0){
+            console.log('hay productos');
+            console.log(this.props.carroCompra);
+            let precios_cantidad = _.map(this.props.carroCompra, item => {
+                return { precio: parseInt(item.product_select.precio), cantidad: parseInt(item.cantidad) };
+            });
+            valorCompra = _.reduce(precios_cantidad, (sum, n) => sum + n.precio * n.cantidad, 0);
+        }
         return(
             // Always sticky-top works on container elements like div
             <div className="sticky-top">
@@ -96,6 +116,10 @@ class CarroCompra extends Component{
                                 <div>{this.props.carroCompra.map(this.renderProductosCarro)}</div>
                             }
                         </ListGroup>
+                        <div>
+                            <hr/>
+                            <Alert color='primary'><strong>Total pedido: </strong> {valorCompra} </Alert>
+                        </div>
                 </ModalBody>
                     <ModalFooter>
                         <Link to='/checkout'>Confirmar pedido</Link>{' '}
