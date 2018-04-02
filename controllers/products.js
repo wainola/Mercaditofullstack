@@ -19,6 +19,7 @@ exports.saveProduct = function(req, res, next){
     const tipo = data.tipo;
     // IMAGE FILE TO SAVE ON PUBLIC DIRECTORY
     let fileImage = req.files.file;
+    let urlCatalogo = 'client/public/catalogo_imagenes/';
 
     // console.log(fileImage);
     // console.log(JSON.parse(req.body.datos));
@@ -32,7 +33,7 @@ exports.saveProduct = function(req, res, next){
         }
         const producto = new Producto({
             nombre: nombre,
-            urlImagen: `public/${fileImage.name}`,
+            urlImagen: `/catalogo_imagenes/${fileImage.name}`,
             descripcion: descripcion,
             stock: stock,
             precio: precio,
@@ -44,7 +45,6 @@ exports.saveProduct = function(req, res, next){
                 return next(err);
             }
             // PROCESSING IMAGE FILE, MOVING TO THE PUBLIC DIRECTORY
-            let urlCatalogo = 'client/public/catalogo_imagenes/';
             fileImage.mv(`${urlCatalogo}${fileImage.name}`, function (err) {
                 console.log("Entre MV function");
                 if (err) {

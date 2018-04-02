@@ -13,11 +13,11 @@ class OnlineProducts extends Component{
        this.props.fetchProducts();
    }
    renderProductos(producto){
-       console.log(producto)
+    //    console.log(producto)
        return(
-           <div className="card border-info" key={producto._id}>
-               <img src={`./${producto.urlImagen}`} alt="" className="img-fluid" />
-               <img src={`${window.location.origin}/pimentones.jpg`} alt="" className="img-fluid"/>
+           <div className="card border-info" key={producto._id} style={{ width: "15rem", marginLeft: "10px", marginBottom: "10px" }}>
+               <img src={`${producto.urlImagen}`} alt="" className="img-fluid" />
+               {/* <img src={`${window.location.origin}/catalogo_imagenes/paltas.jpg`} alt="" className="img-fluid"/> */}
                <div className="card-body">
                    <h4 className="card-title">
                     {producto.nombre}
@@ -29,18 +29,18 @@ class OnlineProducts extends Component{
        );
    }
     render(){
-        console.log(this.props.productosPersistidos);
+        // console.log(this.props.productosPersistidos);
         if(this.props.productosPersistidos.resultApi){
             let nombre = this.props.productosPersistidos.resultApi.map((item) => item.nombre);
             console.log(nombre);
         }
         return(
             <div>
-                <h1>Productos en la página</h1>
+                <h1 className="text-center">Productos en la página</h1>
                 {
                     this.props.productosPersistidos.resultApi
                     ?
-                    <div className="card">
+                    <div className="row justify-content-center">
                         {this.props.productosPersistidos.resultApi.map(this.renderProductos)}
                     </div>
                     :
