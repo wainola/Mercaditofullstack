@@ -12,7 +12,7 @@ import {
 const ROOT_URL = 'http://localhost:4500';
 
 export function fetchProductos(){
-    const url = `${window.location.origin}/data/data_productos.json`;
+    const url = `http://localhost:4500/frontAllProducts`;
     const request = axios.get(url);
     return{
         type: FETCH_DATA,

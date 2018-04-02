@@ -20,4 +20,5 @@ module.exports = function(app){
     // app.get('/user', requireAuth, UserInfo.getUserInfo);
     app.get('/getAllProducts', requireAuth, Productos.getAllProducts);
     app.post('/saveProduct', requireAuth, Productos.saveProduct);
+    app.get('/frontAllProducts', Productos.getAllProducts);
 }
