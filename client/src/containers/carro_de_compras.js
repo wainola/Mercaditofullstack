@@ -7,7 +7,7 @@ class CarroCompra extends Component{
         this.renderBadge = this.renderBadge.bind(this);
     }
     renderBadge(){
-        console.log(this.props.carroCompra.length);
+        //console.log(this.props.carroCompra.length);
         if(this.props.carroCompra.length > 0){
             console.log(this.props.carroCompra.length);
             return(
@@ -21,6 +21,8 @@ class CarroCompra extends Component{
         }
     }
     render(){
+        console.log('carro de compra');
+        console.log(this.props.carroCompra);
         return(
             // Always sticky-top works on container elements like div
             <div className="sticky-top">
