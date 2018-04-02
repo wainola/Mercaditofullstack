@@ -46,7 +46,9 @@ class AddProductos extends Component{
         const data = new FormData();
         data.append('file', this.uploadInput.files[0]);
         data.append('datos', JSON.stringify(values));
-        console.log(this.fileName.value);
+        console.log(values);
+        //console.log(this.fileName.value);
+        // this.props.addNewProduct({data});
         // this.props.reset();
         //console.log(this.props.productos);
         const config = { headers: { 'Content-Type': 'multipart/form-data' } };
@@ -60,6 +62,7 @@ class AddProductos extends Component{
         .then(response => response.json())
         .then(data => {
             console.log(data);
+            this.props.reset();
             if(data.error){
                 swal({
                     title: "El producto ya existe!",
@@ -67,7 +70,6 @@ class AddProductos extends Component{
                     icon: "warning",
                     button: "Close",
                 });
-                this.props.reset();
             }
             else{
                 swal({
@@ -75,6 +77,7 @@ class AddProductos extends Component{
                     icon: "success",
                     button: "Close",
                 });
+                this.props.reset();
             }
         });
         //this.props.addNewProduct({product: values});

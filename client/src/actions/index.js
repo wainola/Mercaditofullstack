@@ -61,20 +61,9 @@ export function signoutUser(){
     }
 }
 
-export function addNewProduct({product}){
-    console.log('action');
-    console.log({product});
-    // const { nombre, urlImagen, descripcion, stock, precio } = product;
-    // console.log(stock);
-    const request = axios.post(`${ROOT_URL}/saveProduct`, product, {
-        headers: {
-            authorization: localStorage.getItem('token'),
-            'Content-Type': 'multipart/form-data'
-        },
-    });
-    return{
-        type: ADD_NEW_PRODUCT,
-        payload: request
+export function addNewProduct({data}){
+    return function(dispatch){
+        console.log(data);  
     }
 }
 

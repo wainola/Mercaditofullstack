@@ -1,5 +1,5 @@
 const Producto = require('../model/Producto');
-
+const fs = require('fs');
 
 exports.getAllProducts = function(req, res, next){
     const productos = Producto.find({}, function(err, productos){
@@ -20,6 +20,8 @@ exports.saveProduct = function(req, res, next){
     // IMAGE FILE TO SAVE ON PUBLIC DIRECTORY
     let fileImage = req.files.file;
     let urlCatalogo = 'client/public/catalogo_imagenes/';
+
+    console.log(req.files.file.name);
 
     // console.log(fileImage);
     // console.log(JSON.parse(req.body.datos));
@@ -45,14 +47,28 @@ exports.saveProduct = function(req, res, next){
                 return next(err);
             }
             // PROCESSING IMAGE FILE, MOVING TO THE PUBLIC DIRECTORY
-            fileImage.mv(`${urlCatalogo}${fileImage.name}`, function (err) {
-                console.log("Entre MV function");
-                if (err) {
-                    console.log("Error");
-                    return res.status(500).send(err);
-                }
-                res.json({ saved: 'guardado con exito!', file: `${urlCatalogo}${fileImage.name}` });
-            });
+            // CHECKING IF THE IMAGE ALREADY EXISTS
+
+            /*
+            ACTUALMENTE SI LA IMAGEN EXISTE, ENVIA ESTE MENSAJE PERO PERSISTE EN GUARDAR EL ARCHIVO CON LA MISMA IMAGEN.
+            BUSCAR UNA SOLUCION MAS MODULAR QUE ANTE LA CARGA DE UNA IMAGEN SIMILAR SIMPLEMENTE GENERE UNA NUEVA IMAGEN 
+            Y LA GUARDE, AUNQUE QUIZAS ESTA TAMPOCO SEA LA SOLUCION MAS EFICIENTE
+            */
+            let exists = fs.existsSync(`${urlCatalogo}/${fileImage.name}`);
+            if(!exists){
+                fileImage.mv(`${urlCatalogo}${fileImage.name}`, function (err) {
+                    console.log("Entre MV function");
+                    if (err) {
+                        console.log("Error");
+                        return res.status(500).send(err);
+                    }
+                    res.json({ saved: 'guardado con exito!', file: `${urlCatalogo}${fileImage.name}` });
+                });
+            }
+            else{
+                res.json({msg: 'el archivo ya existe, sobreescribirlo?'});
+            }
         });
     });
+
 }
