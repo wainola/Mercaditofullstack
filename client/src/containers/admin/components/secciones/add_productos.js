@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Button } from 'reactstrap';
 import { FormGroup, Label, Input } from 'reactstrap';
 import axios from 'axios';
+import swal from 'sweetalert';
 
 
 class AddProductos extends Component{
@@ -59,7 +60,22 @@ class AddProductos extends Component{
         .then(response => response.json())
         .then(data => {
             console.log(data);
-            this.props.reset();
+            if(data.error){
+                swal({
+                    title: "El producto ya existe!",
+                    text: "El producto no fue guardado",
+                    icon: "warning",
+                    button: "Close",
+                });
+                this.props.reset();
+            }
+            else{
+                swal({
+                    title: "Guardado con éxito!",
+                    icon: "success",
+                    button: "Close",
+                });
+            }
         });
         //this.props.addNewProduct({product: values});
     }
