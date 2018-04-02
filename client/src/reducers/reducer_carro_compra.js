@@ -5,6 +5,10 @@ export default function(state=[], action){
     //console.log("Reducer cart", action.payload);
     switch(action.type){
         case ADD_TO_CART:
+            console.log('reducer add_to_cart case');
+            console.log('state');
+            console.log(state);
+            console.log(action.payload);
             return [action.payload, ...state];
         case REMOVE_FROM_CART:
             // console.log('reducer remove from cart');

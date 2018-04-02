@@ -76,8 +76,8 @@ class CarroCompra extends Component{
         // console.log(this.props.carroCompra);
         let valorCompra = 0;
         if(this.props.carroCompra.length > 0){
-            console.log('hay productos');
-            console.log(this.props.carroCompra);
+            // console.log('hay productos');
+            // console.log(this.props.carroCompra);
             let precios_cantidad = _.map(this.props.carroCompra, item => {
                 return { precio: parseInt(item.product_select.precio), cantidad: parseInt(item.cantidad) };
             });

@@ -6,38 +6,36 @@ import {bindActionCreators} from 'redux';
 import swal from 'sweetalert';
 import { Route, Switch, Link } from 'react-router-dom';
 import Checkout from './checkout';
+import _ from 'lodash';
 
 class ProductListing extends Component{
     constructor(props){
         super(props);
         this.state = {
-            cantidad: '0'
+            cantidad: '0',
+            id_actual: ''
         }
         this.renderProductos = this.renderProductos.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.addToCart = this.addToCart.bind(this);
     }
-    componentWillReceiveProps(){
-    }
     componentDidUpdate(){
-        console.log('carro actualizado');
-        if (this.props.carroCompra.length > 1) {
-            // console.log('elementos en carro de compra');
-            // console.log(this.props.carroCompra);
-            this.props.carroCompra.forEach((item) => {
-                console.log(item);
-            })
+        //console.log('carro actualizado');
+        //console.log(this.state.id_actual === '' ? 'no definido aun': this.state.id_actual);
+        if(this.props.carroCompra.length > 1){
+            // console.log('mas de un elemento en el carro');
+            // console.log(_.some(this.props.carroCompra, ['id', this.state.id_actual]));
+            // console.log(_.filter(this.props.carroCompra, (item) => item.id !== this.state.id_actual || item.id === this.state.id_actual));
         }
     }
     handleChange(event){
-        console.log(event.target.value);
+        //console.log(event.target.value);
         this.setState({cantidad: event.target.value});
-        console.log(this.state.cantidad);
+        // console.log(this.state.cantidad);
     }
     // METHOD THAT HANDLES THE CART FROM THE MAIN PAGE
     addToCart(event){
         event.preventDefault();
-        //console.log(event.target);
         if(event.target[0].value === 'Cantidad'){
             swal({
                 title: 'No puede seleccionar cero cantidad de productos!',
@@ -46,6 +44,7 @@ class ProductListing extends Component{
         }
         else{
             //console.log(event.target.dataset);
+            this.setState({ id_actual: JSON.parse(event.target.dataset.producto).id})
             this.props.addToCart({ product_select: JSON.parse(event.target.dataset.producto), cantidad: this.state.cantidad, id: JSON.parse(event.target.dataset.producto).id });
             //console.log(this.props.carroCompra);
         }
@@ -95,12 +94,6 @@ class ProductListing extends Component{
         );
     }
     render(){
-        //console.log(this.props.productos[0] ? this.props.productos[0] : "nada aun");
-        // if(this.props.productos[0]){
-        //     this.renderProductos(this.props.productos[0]);
-        // }
-        // console.log(this.props.carroCompra);
-        // console.log(this.props);
         return(
             <div>
                 <hr/>
