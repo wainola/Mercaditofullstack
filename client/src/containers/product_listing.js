@@ -36,7 +36,7 @@ class ProductListing extends Component{
             <form 
             key={productos._id} 
             onSubmit={this.addToCart} 
-            data-producto={JSON.stringify({id:productos._id, name:productos.nombre, description:productos.descripcion})}>
+            data-producto={JSON.stringify({id:productos._id, nombre:productos.nombre, descripcion:productos.descripcion, tipo: productos.tipo, precio: productos.precio})}>
                 <div className="card border-info" style={{ width: "15rem", marginLeft: "10px", marginBottom: "10px" }}>
 
                     <img className="img-fluid" src={`${window.location.origin}${productos.urlImagen}`} alt="Card image cap" />

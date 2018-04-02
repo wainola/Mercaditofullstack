@@ -6,3 +6,4 @@ export const AUTH_ERROR = 'auth_error';
 export const UNAUTH_USER = 'unauth_user';
 export const ADD_NEW_PRODUCT = 'add_new_product';
 export const FETCH_PRODUCTS = 'fetch_products';
+export const REMOVE_FROM_CART = 'remove_from_cart';

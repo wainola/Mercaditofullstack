@@ -6,7 +6,8 @@ import {
     AUTH_ERROR,
     UNAUTH_USER,
     ADD_NEW_PRODUCT,
-    FETCH_PRODUCTS
+    FETCH_PRODUCTS,
+    REMOVE_FROM_CART
 } from './types';
 
 const ROOT_URL = 'http://localhost:4500';
@@ -24,6 +25,12 @@ export function addToCart(producto){
     return{
         type: ADD_TO_CART,
         payload: producto
+    }
+}
+
+export function removeFromCart(producto){
+    return{
+        type: REMOVE_FROM_CART
     }
 }
 

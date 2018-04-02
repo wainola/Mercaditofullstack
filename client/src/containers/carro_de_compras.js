@@ -1,10 +1,19 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ListGroup, ListGroupItem } from 'reactstrap';
+import ModalProducto from './modal';
+import * as actions from '../actions/index';
 
 class CarroCompra extends Component{
     constructor(props){
         super(props);
         this.renderBadge = this.renderBadge.bind(this);
+        this.state = {
+            modal:false
+        }
+        this.toggle = this.toggle.bind(this);
+        this.removeFromCart = this.removeFromCart.bind(this);
+        this.renderProductosCarro = this.renderProductosCarro.bind(this);
     }
     renderBadge(){
         //console.log(this.props.carroCompra.length);
@@ -20,13 +29,42 @@ class CarroCompra extends Component{
             )
         }
     }
+    clickBadge(event){
+        event.preventDefault();
+        console.log('click badge');
+        this.setState({
+            modal: !this.state.modal
+        });
+    }
+    toggle(){
+        this.setState({
+            modal: !this.state.modal
+        });
+    }
+    removeFromCart(){
+    }
+    // RENDER THE PRODUCTS THAT ARE CURRENTLY SELECTED IN THE SHOPPING CART
+    renderProductosCarro(itemes){
+        console.log('render items carro de compras');
+        console.log(itemes);
+        let cantidad = `${itemes.cantidad} ${itemes.product_select.tipo === 'kilo' ? 'kilos' : 'unidades'}`;
+        let producto = `Producto: ${itemes.product_select.nombre}`;
+        let precio = `$${itemes.product_select.precio}`;
+        let key = itemes.product_select.id;
+        return(
+            <ListGroupItem key={key}>
+                <p>{producto}</p>
+                <p><span>Cantidad: {cantidad}.</span> | <span>Precio: {precio}</span> <span><Button type='button' className='btn btn-warning' onClick={this.removeFromCart}>Quitar</Button></span></p>
+            </ListGroupItem>
+        );
+    }
     render(){
         console.log('carro de compra');
-        console.log(this.props.carroCompra);
+        console.log(this.props);
         return(
             // Always sticky-top works on container elements like div
             <div className="sticky-top">
-                <a href="">
+                <a href="" onClick={this.clickBadge.bind(this)}>
                     <i
                         className="fas fa-cart-plus fa-2x float-right"
                         style={{
@@ -45,6 +83,24 @@ class CarroCompra extends Component{
                         {this.renderBadge()}
                     </span>
                 </a>
+                <ModalProducto />
+                {/* MODAL FOR SHOPPOING CART */}
+                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                    <ModalHeader toggle={this.toggle}>Productos en el carro</ModalHeader>
+                    <ModalBody>
+                        <ListGroup>
+                            {this.props.carroCompra.length === 0 ?
+                                <p>No hay productos aun en el carrito!</p> 
+                            :
+                                <div>{this.props.carroCompra.map(this.renderProductosCarro)}</div>
+                            }
+                        </ListGroup>
+                </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={this.toggle}>Cerrar</Button>{' '}
+                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                    </ModalFooter>
+                </Modal>
             </div>
         );
     }
@@ -53,4 +109,4 @@ class CarroCompra extends Component{
 function mapStateToProps({carroCompra}){
     return {carroCompra}
 }
-export default connect(mapStateToProps)(CarroCompra);
+export default connect(mapStateToProps, actions)(CarroCompra);
