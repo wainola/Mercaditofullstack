@@ -8,6 +8,7 @@ import OnlineProducts from './secciones/online_products';
 
 class NavMenu extends Component{
     render(){
+        // console.log(this.props);
         return(
             <div>
                 <div className="row justify-content-center">

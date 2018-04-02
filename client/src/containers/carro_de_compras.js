@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ListGroup, ListGroupItem } from 'reactstrap';
-import ModalProducto from './modal';
 import * as actions from '../actions/index';
+import Checkout from './checkout';
+import { Route, Link } from 'react-router-dom';
 
 class CarroCompra extends Component{
     constructor(props){
@@ -60,8 +61,8 @@ class CarroCompra extends Component{
         );
     }
     render(){
-        console.log('carro de compra');
-        console.log(this.props.carroCompra);
+        // console.log('carro de compra');
+        // console.log(this.props.carroCompra);
         return(
             // Always sticky-top works on container elements like div
             <div className="sticky-top">
@@ -84,7 +85,6 @@ class CarroCompra extends Component{
                         {this.renderBadge()}
                     </span>
                 </a>
-                <ModalProducto />
                 {/* MODAL FOR SHOPPOING CART */}
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Productos en el carro</ModalHeader>
@@ -98,7 +98,8 @@ class CarroCompra extends Component{
                         </ListGroup>
                 </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.toggle}>Cerrar</Button>{' '}
+                        <Link to='/checkout'>Confirmar pedido</Link>{' '}
+                        <Button color="danger" onClick={this.toggle}>Cerrar</Button>
                     </ModalFooter>
                 </Modal>
             </div>

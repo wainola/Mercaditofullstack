@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-//import ModalProducto from './modal';
 import {Button} from 'reactstrap';
 import {addToCart} from '../actions/index';
 import {bindActionCreators} from 'redux';
+import swal from 'sweetalert';
+import { Route, Switch, Link } from 'react-router-dom';
+import Checkout from './checkout';
 
 class ProductListing extends Component{
     constructor(props){
@@ -24,9 +26,18 @@ class ProductListing extends Component{
     // METHOD THAT HANDLES THE CART FROM THE MAIN PAGE
     addToCart(event){
         event.preventDefault();
-        console.log(event.target.dataset);
-        this.props.addToCart({ product_select: JSON.parse(event.target.dataset.producto), cantidad: this.state.cantidad, id: JSON.parse(event.target.dataset.producto).id});
-        console.log(this.props.carroCompra);
+        console.log(event.target);
+        if(event.target[0].value === 'Cantidad'){
+            swal({
+                title: 'No puede seleccionar cero cantidad de productos!',
+                icon: 'error'
+            });
+        }
+        else{
+            console.log(event.target.dataset);
+            this.props.addToCart({ product_select: JSON.parse(event.target.dataset.producto), cantidad: this.state.cantidad, id: JSON.parse(event.target.dataset.producto).id });
+            console.log(this.props.carroCompra);
+        }
     }
     renderProductos(productos){
         // console.log('render productos');
@@ -78,6 +89,7 @@ class ProductListing extends Component{
         //     this.renderProductos(this.props.productos[0]);
         // }
         console.log(this.props.carroCompra);
+        console.log(this.props);
         return(
             <div>
                 <hr/>
