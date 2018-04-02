@@ -28,9 +28,12 @@ export function addToCart(producto){
     }
 }
 
-export function removeFromCart(producto){
+export function removeFromCart(key){
+    // console.log('remove cart action');
+    // console.log(key);
     return{
-        type: REMOVE_FROM_CART
+        type: REMOVE_FROM_CART,
+        payload: key
     }
 }
 
