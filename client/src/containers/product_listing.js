@@ -27,19 +27,20 @@ class ProductListing extends Component{
         //console.log(this.props);
     }
     renderProductos(productos){
-        //console.log("Render de productos");
+        console.log('render productos');
+        console.log(productos);
         return(
             // Aproximacion cochina a la captura de los datos de cada producto
             <form 
-            key={productos.id} 
+            key={productos._id} 
             onSubmit={this.addToCart} 
             data-producto={JSON.stringify({id:productos.id, name:productos.product_name, description:productos.description})}>
                 <div className="card border-info" style={{ width: "15rem", marginLeft: "10px", marginBottom: "10px" }}>
 
-                    <img className="img-fluid" src="./productos/cebolla.png" alt="Card image cap" />
+                    <img className="img-fluid" src={`${window.location.origin}${productos.urlImagen}`} alt="Card image cap" />
                     <div className="card-body">
-                        <h4 className="card-title">{productos.product_name}</h4>
-                        <p className="card-text">{productos.description}</p>
+                        <h4 className="card-title">{productos.nombre}</h4>
+                        <p className="card-text">{productos.descripcion}</p>
                         <div className="row">
                             <div className="col">
                                 <div className="form-check">
@@ -74,7 +75,7 @@ class ProductListing extends Component{
         // if(this.props.productos[0]){
         //     this.renderProductos(this.props.productos[0]);
         // }
-        console.log(this.props.productos);
+        //console.log(this.props.productos);
         return(
             <div>
                 <hr/>
