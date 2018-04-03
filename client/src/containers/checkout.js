@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Table, Alert } from 'reactstrap';
+import { Table, Alert, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import Presentacion from '../components/main_presentacion';
 import _ from 'lodash';
 
@@ -14,6 +14,27 @@ class Checkout extends Component {
                 <th>{producto.cantidad}</th>
                 <th>{producto.product_select.precio}</th>
             </tr>
+        );
+    }
+    renderFormCheckout(){
+        return(
+            <Form>
+                <FormGroup>
+                    <Label>Nombre</Label>
+                    <Input type='text' placeholder='Nombre y Apellido' />
+                </FormGroup>
+                <FormGroup>
+                    <Label>Email</Label>
+                    <Input type='email' placeholder='Ingrese su correo electrónico'/>
+                </FormGroup>
+                <FormGroup>
+                    <Label>Dirección de Despacho</Label>
+                    <Input type='text' placeholder='Ingrese su dirección de despacho' />
+                </FormGroup>
+                <FormGroup>
+                    <Button type='submit' className='btn btn-success'>Enviar orden de compra</Button>
+                </FormGroup>
+            </Form>
         );
     }
     render(){
@@ -43,6 +64,7 @@ class Checkout extends Component {
                         <Alert color='primary'>
                             <strong>Total: {this.props.valorCompra[0] === undefined ? 0 : this.props.valorCompra[0]}</strong>{}
                         </Alert>
+                        {this.renderFormCheckout()}
                     </div>
                 </div>
             </div>
