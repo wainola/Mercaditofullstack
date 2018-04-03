@@ -19,12 +19,6 @@ class Navegacion extends Component {
           <NavItem>
             <NavLink href="#">Frutas</NavLink>
           </NavItem>
-          <NavItem>
-            <Link to="/signin" className="btn border-warning">Login</Link>
-          </NavItem>
-          <NavItem>
-            <Link to="/admin" className="btn border-warning" style={{ marginLeft: "5px" }}>Admin</Link>
-          </NavItem>
         </Nav>
       </div>
     );
