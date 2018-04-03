@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Button} from 'reactstrap';
-import {addToCart} from '../actions/index';
+import { addToCart, purchaseValue} from '../actions/index';
 import {bindActionCreators} from 'redux';
 import swal from 'sweetalert';
 import { Route, Switch, Link } from 'react-router-dom';
@@ -18,15 +18,6 @@ class ProductListing extends Component{
         this.renderProductos = this.renderProductos.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.addToCart = this.addToCart.bind(this);
-    }
-    componentDidUpdate(){
-        //console.log('carro actualizado');
-        //console.log(this.state.id_actual === '' ? 'no definido aun': this.state.id_actual);
-        if(this.props.carroCompra.length > 1){
-            // console.log('mas de un elemento en el carro');
-            // console.log(_.some(this.props.carroCompra, ['id', this.state.id_actual]));
-            // console.log(_.filter(this.props.carroCompra, (item) => item.id !== this.state.id_actual || item.id === this.state.id_actual));
-        }
     }
     handleChange(event){
         //console.log(event.target.value);
@@ -50,8 +41,6 @@ class ProductListing extends Component{
         }
     }
     renderProductos(productos){
-        // console.log('render productos');
-        // console.log(productos);
         return(
             // Aproximacion cochina a la captura de los datos de cada producto
             <form 
@@ -94,6 +83,7 @@ class ProductListing extends Component{
         );
     }
     render(){
+        console.log(this.props);
         return(
             <div>
                 <hr/>
@@ -117,7 +107,7 @@ function mapStateToProps({productos, carroCompra}){
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({addToCart}, dispatch);
+    return bindActionCreators({ addToCart, purchaseValue}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductListing);

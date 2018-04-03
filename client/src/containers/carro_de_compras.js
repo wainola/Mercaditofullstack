@@ -11,7 +11,8 @@ class CarroCompra extends Component{
         super(props);
         this.renderBadge = this.renderBadge.bind(this);
         this.state = {
-            modal:false
+            modal: false,
+            valorCompra: 0
         }
         this.toggle = this.toggle.bind(this);
         this.removeFromCart = this.removeFromCart.bind(this);
@@ -61,28 +62,21 @@ class CarroCompra extends Component{
             </ListGroupItem>
         );
     }
-    renderTotal(){
-        console.log(this.props.carroCompra);
-        if(this.props.carroCompra > 0){
-            console.log('render total');
-            let precios_cantidad = _.map(this.props.carroCompra, item => {
-                return { precio: parseInt(item.product_select.precio), cantidad: parseInt(item.cantidad) };
-            });
-            console.log(_.reduce(precios_cantidad, (sum, n) => sum + n.precio * n.cantidad, 0));
-        }
-    }
+    // renderTotal(){
+    //     console.log(this.props.carroCompra);
+    //     if(this.props.carroCompra > 0){
+    //         console.log('render total');
+    //         let precios_cantidad = _.map(this.props.carroCompra, item => {
+    //             return { precio: parseInt(item.product_select.precio), cantidad: parseInt(item.cantidad) };
+    //         });
+    //         console.log(_.reduce(precios_cantidad, (sum, n) => sum + n.precio * n.cantidad, 0));
+    //     }
+    // }
+    // sendPurchaseValue(valor){
+    //     console.log(valor);
+    //     this.props.purchaseValue(this.state.valorCompra);
+    // }
     render(){
-        // console.log('carro de compra');
-        // console.log(this.props.carroCompra);
-        let valorCompra = 0;
-        if(this.props.carroCompra.length > 0){
-            // console.log('hay productos');
-            // console.log(this.props.carroCompra);
-            let precios_cantidad = _.map(this.props.carroCompra, item => {
-                return { precio: parseInt(item.product_select.precio), cantidad: parseInt(item.cantidad) };
-            });
-            valorCompra = _.reduce(precios_cantidad, (sum, n) => sum + n.precio * n.cantidad, 0);
-        }
         return(
             // Always sticky-top works on container elements like div
             <div className="sticky-top">
@@ -118,7 +112,7 @@ class CarroCompra extends Component{
                         </ListGroup>
                         <div>
                             <hr/>
-                            <Alert color='primary'><strong>Total pedido: </strong> {valorCompra} </Alert>
+                            <Alert color='primary'><strong>Total pedido: </strong>  </Alert>
                         </div>
                 </ModalBody>
                     <ModalFooter>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Table, Alert } from 'reactstrap';
 import Presentacion from '../components/main_presentacion';
+import _ from 'lodash';
 
 class Checkout extends Component {
     renderOrder(producto){

@@ -7,7 +7,8 @@ import {
     UNAUTH_USER,
     ADD_NEW_PRODUCT,
     FETCH_PRODUCTS,
-    REMOVE_FROM_CART
+    REMOVE_FROM_CART,
+    GET_PURCHASE_VALUE
 } from './types';
 
 const ROOT_URL = 'http://localhost:4500';
@@ -34,6 +35,13 @@ export function removeFromCart(key){
     return{
         type: REMOVE_FROM_CART,
         payload: key
+    }
+}
+
+export function purchaseValue(value){
+    return{
+        type: GET_PURCHASE_VALUE,
+        payload: value
     }
 }
 
