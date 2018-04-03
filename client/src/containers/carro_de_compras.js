@@ -58,10 +58,11 @@ class CarroCompra extends Component{
         return(
             <ListGroupItem key={key}>
                 <p>{producto}</p>
-                <p><span>Cantidad: {cantidad}.</span> | <span>Precio: {precio}</span> <span><Button type='button' className='btn btn-warning' onClick={() => {this.removeFromCart(key); this.updatePurchaseValue(parseInt(item.cantidad) * parseInt(item.product_select.precio))}}>Quitar</Button></span></p>
+                <p><span>Cantidad: {cantidad}.</span> | <span>Precio: {precio}</span> <span><Button type='button' className='btn btn-warning' onClick={() => {this.removeFromCart(key)} }>Quitar</Button></span></p>
             </ListGroupItem>
         );
     }
+    // RENDER THE ACTUAL VALUE OF THE CART
     valorCompra(){
         let valor_compra = _.reduce(this.props.carroCompra, (accu, item) => accu + item.valor_a_pagar, 0);
         this.pasarValor(valor_compra)
@@ -105,7 +106,7 @@ class CarroCompra extends Component{
                             {this.props.carroCompra.length === 0 ?
                                 <p>No hay productos aun en el carrito!</p> 
                             :
-                                <div>{/* {this.props.carroCompra.map(this.renderProductosCarro)} */}</div>
+                                <div>{this.props.carroCompra.map(this.renderProductosCarro)}</div>
                             }
                         </ListGroup>
                         <div>

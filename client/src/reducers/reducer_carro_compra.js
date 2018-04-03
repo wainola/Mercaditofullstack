@@ -28,12 +28,12 @@ export default function(state=[], action){
             return [action.payload, ...state];
             
         case REMOVE_FROM_CART:
-            // console.log('reducer remove from cart');
-            // console.log(action.payload);
+            console.log('reducer remove from cart');
+            console.log('la accion a ejecutar es', action.payload);
+            console.log('el estado actual es', state);
             let removeProduct = item => item.id !== action.payload;
             let newState = _.filter(state, removeProduct);
-            // console.log('new state');
-            // console.log(newState);
+            console.log('el nuevo estado es', newState);
             return [ ...newState ];
     }
     return state;
