@@ -8,7 +8,8 @@ import {
     ADD_NEW_PRODUCT,
     FETCH_PRODUCTS,
     REMOVE_FROM_CART,
-    GET_PURCHASE_VALUE
+    GET_PURCHASE_VALUE,
+    SUBTRACT_FROM_CART
 } from './types';
 
 const ROOT_URL = 'http://localhost:4500';
@@ -42,6 +43,13 @@ export function purchaseValue(value){
     return{
         type: GET_PURCHASE_VALUE,
         payload: value
+    }
+}
+
+export function subtractFromCart(valueToSubtract){
+    return{
+        type: SUBTRACT_FROM_CART,
+        payload: valueToSubtract
     }
 }
 

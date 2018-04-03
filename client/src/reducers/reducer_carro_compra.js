@@ -4,6 +4,7 @@ import _ from 'lodash';
 export default function(state=[], action){
     //console.log("Reducer cart", action.payload);
     switch(action.type){
+
         case ADD_TO_CART:
             console.log(state);
             console.log(action.payload);
@@ -21,16 +22,11 @@ export default function(state=[], action){
                 const newState = [...state];
                 console.log('cambiando el state', newState.splice(index, _.merge(match, action.payload)));
                 console.log('el nuevo estado es', newState);
-
-                // CALCULATING THE PURCHASED VALUE;
-                console.log(newState);
                 
                 return [...newState ];
-            }
-
-            let valorCompraActual = parseInt(action.payload.cantidad) * parseInt(action.payload.product_select.precio);
-            
+            }            
             return [action.payload, ...state];
+            
         case REMOVE_FROM_CART:
             // console.log('reducer remove from cart');
             // console.log(action.payload);

@@ -33,7 +33,7 @@ class Checkout extends Component {
     }
     render(){
         console.log('checkout!');
-        console.log(this.props.carroCompra);
+        console.log(this.props.valorCompra[0]);
         return(
             <div>
                 <div>
@@ -63,8 +63,8 @@ class Checkout extends Component {
     }
 }
 
-function mapStateToProps({carroCompra}){
-    return {carroCompra};
+function mapStateToProps({ carroCompra, valorCompra}){
+    return { carroCompra, valorCompra};
 }
 
 export default connect(mapStateToProps)(Checkout);

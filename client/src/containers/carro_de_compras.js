@@ -47,6 +47,11 @@ class CarroCompra extends Component{
     removeFromCart(key){
         this.props.removeFromCart(key);
     }
+    updatePurchaseValue(valor){
+        // console.log('valor a restar', valor);
+        // console.log('quedaria en:', this.props.valorCompra[0] - valor);
+        this.props.subtractFromCart(valor);
+    }
     // RENDER THE PRODUCTS THAT ARE CURRENTLY SELECTED IN THE SHOPPING CART
     renderProductosCarro(item){
         // console.log('render items carro de compras');
@@ -58,25 +63,13 @@ class CarroCompra extends Component{
         return(
             <ListGroupItem key={key}>
                 <p>{producto}</p>
-                <p><span>Cantidad: {cantidad}.</span> | <span>Precio: {precio}</span> <span><Button type='button' className='btn btn-warning' onClick={() => this.removeFromCart(key)}>Quitar</Button></span></p>
+                <p><span>Cantidad: {cantidad}.</span> | <span>Precio: {precio}</span> <span><Button type='button' className='btn btn-warning' onClick={() => {this.removeFromCart(key); this.updatePurchaseValue(parseInt(item.cantidad) * parseInt(item.product_select.precio))}}>Quitar</Button></span></p>
             </ListGroupItem>
         );
     }
-    // renderTotal(){
-    //     console.log(this.props.carroCompra);
-    //     if(this.props.carroCompra > 0){
-    //         console.log('render total');
-    //         let precios_cantidad = _.map(this.props.carroCompra, item => {
-    //             return { precio: parseInt(item.product_select.precio), cantidad: parseInt(item.cantidad) };
-    //         });
-    //         console.log(_.reduce(precios_cantidad, (sum, n) => sum + n.precio * n.cantidad, 0));
-    //     }
-    // }
-    // sendPurchaseValue(valor){
-    //     console.log(valor);
-    //     this.props.purchaseValue(this.state.valorCompra);
-    // }
     render(){
+        console.log('render carro compras')
+        console.log(this.props.valorCompra[0] === undefined ? 0 : this.props.valorCompra[0]);
         return(
             // Always sticky-top works on container elements like div
             <div className="sticky-top">
@@ -112,7 +105,7 @@ class CarroCompra extends Component{
                         </ListGroup>
                         <div>
                             <hr/>
-                            <Alert color='primary'><strong>Total pedido: </strong>  </Alert>
+                            <Alert color='primary'><strong>Total pedido: </strong>  {this.props.valorCompra[0] === undefined ? 0 : this.props.valorCompra[0] }</Alert>
                         </div>
                 </ModalBody>
                     <ModalFooter>
@@ -125,7 +118,7 @@ class CarroCompra extends Component{
     }
 }
 
-function mapStateToProps({carroCompra}){
-    return {carroCompra}
+function mapStateToProps({ carroCompra, valorCompra}){
+    return { carroCompra, valorCompra }
 }
 export default connect(mapStateToProps, actions)(CarroCompra);

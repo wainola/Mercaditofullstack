@@ -8,3 +8,4 @@ export const ADD_NEW_PRODUCT = 'add_new_product';
 export const FETCH_PRODUCTS = 'fetch_products';
 export const REMOVE_FROM_CART = 'remove_from_cart';
 export const GET_PURCHASE_VALUE = 'get_purchase_value';
+export const SUBTRACT_FROM_CART = 'subtract_from_cart';

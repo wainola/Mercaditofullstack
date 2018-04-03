@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Button} from 'reactstrap';
-import { addToCart, purchaseValue} from '../actions/index';
+import { addToCart, purchaseValue } from '../actions/index';
 import {bindActionCreators} from 'redux';
 import swal from 'sweetalert';
 import { Route, Switch, Link } from 'react-router-dom';
@@ -38,6 +38,8 @@ class ProductListing extends Component{
             this.setState({ id_actual: JSON.parse(event.target.dataset.producto).id})
             this.props.addToCart({ product_select: JSON.parse(event.target.dataset.producto), cantidad: this.state.cantidad, id: JSON.parse(event.target.dataset.producto).id });
             //console.log(this.props.carroCompra);
+            let precio_cantidad = { precio: parseInt(JSON.parse(event.target.dataset.producto).precio), cantidad: parseInt(this.state.cantidad) };
+            this.props.purchaseValue(precio_cantidad);
         }
     }
     renderProductos(productos){
@@ -83,7 +85,7 @@ class ProductListing extends Component{
         );
     }
     render(){
-        console.log(this.props);
+        // console.log(this.props);
         return(
             <div>
                 <hr/>
@@ -102,12 +104,12 @@ class ProductListing extends Component{
     }
 }
 
-function mapStateToProps({productos, carroCompra}){
-    return {productos, carroCompra};
+function mapStateToProps({ productos, carroCompra, valorCompra }){
+    return { productos, carroCompra, valorCompra };
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({ addToCart, purchaseValue}, dispatch);
+    return bindActionCreators({ addToCart, purchaseValue }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductListing);
