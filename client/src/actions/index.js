@@ -39,10 +39,10 @@ export function removeFromCart(key){
     }
 }
 
-export function purchaseValue(value){
+export function purchaseValue(value, nombre_producto){
     return{
         type: GET_PURCHASE_VALUE,
-        payload: value
+        payload: {valor: value, producto: nombre_producto}
     }
 }
 

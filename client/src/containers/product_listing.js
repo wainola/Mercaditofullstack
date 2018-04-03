@@ -39,7 +39,9 @@ class ProductListing extends Component{
             this.props.addToCart({ product_select: JSON.parse(event.target.dataset.producto), cantidad: this.state.cantidad, id: JSON.parse(event.target.dataset.producto).id });
             //console.log(this.props.carroCompra);
             let precio_cantidad = { precio: parseInt(JSON.parse(event.target.dataset.producto).precio), cantidad: parseInt(this.state.cantidad) };
-            this.props.purchaseValue(precio_cantidad);
+            let nombre_producto = JSON.parse(event.target.dataset.producto).nombre;
+            //console.log(nombre_producto);
+            this.props.purchaseValue(precio_cantidad, nombre_producto);
         }
     }
     renderProductos(productos){
