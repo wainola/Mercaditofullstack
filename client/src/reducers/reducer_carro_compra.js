@@ -18,13 +18,15 @@ export default function(state=[], action){
                 console.log('esta actualmente en el state', match);
                 console.log('queremos cambiarlo por', action.payload);
                 console.log('cambio:', _.merge(match, action.payload));
-                console.log('cambiando el state', state.splice(index, _.merge(match, action.payload)));
+                // TAKING INTO ACCOUNT INMUTABILITY
+                const newState = [...state];
+                console.log('cambiando el state', newState.splice(index, _.merge(match, action.payload)));
                 console.log('el nuevo estado es', state);
                 // let newState = _.merge(match, state);
                 // console.log('new match');
                 // console.log(newState);
                 
-                return [...state];
+                return [...newState];
             }
             return [action.payload, ...state];
         case REMOVE_FROM_CART:
