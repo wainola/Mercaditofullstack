@@ -4,6 +4,7 @@ import { Table, Alert, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import Presentacion from '../components/main_presentacion';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
+import * as actions from '../actions/index';
 
 class Checkout extends Component {
     renderOrder(producto){
@@ -17,20 +18,25 @@ class Checkout extends Component {
             </tr>
         );
     }
+    onSubmit(event){
+        event.preventDefault();
+        console.log('submit');
+        console.log(event.target[0].value);
+    }
     renderFormCheckout(){
         return(
-            <Form>
+            <Form onSubmit={this.onSubmit.bind(this)}>
                 <FormGroup>
                     <Label>Nombre</Label>
                     <Input type='text' placeholder='Nombre y Apellido' />
                 </FormGroup>
                 <FormGroup>
                     <Label>Email</Label>
-                    <Input type='email' placeholder='Ingrese su correo electrónico'/>
+                    <Input type='email' placeholder='Correo electrónico' />
                 </FormGroup>
                 <FormGroup>
                     <Label>Dirección de Despacho</Label>
-                    <Input type='text' placeholder='Ingrese su dirección de despacho' />
+                    <Input type='direccion' placeholder='Dirección de despacho' />
                 </FormGroup>
                 <FormGroup>
                     <Button type='submit' className='btn btn-success'>Enviar orden de compra</Button>
