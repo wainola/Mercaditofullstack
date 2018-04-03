@@ -4,6 +4,15 @@ import _ from 'lodash';
 export default function(state=[], action){
     switch(action.type){
         case GET_PURCHASE_VALUE:
+            console.log('get purchased value');
+            console.log('el estado actual es', state);
+            console.log('el valor a modificar es', action.payload);
+            if((action.payload.precio * action.payload.cantidad) < state[0]){
+                console.log('el valor recibido es menor a lo que esta en el estado, por lo que hubo un cambio en la seleccion');
+                let changeInState = [...state];
+                changeInState = [(action.payload.precio * action.payload.cantidad)];
+                return changeInState;
+            }
             // console.log('reducer purchased value');
             // console.log(action)
 
