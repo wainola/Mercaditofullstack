@@ -12,7 +12,7 @@ class CarroCompra extends Component{
         this.renderBadge = this.renderBadge.bind(this);
         this.state = {
             modal: false,
-            valorCompra: 0
+            valor_a_pagar: 0
         }
         this.toggle = this.toggle.bind(this);
         this.removeFromCart = this.removeFromCart.bind(this);
@@ -47,11 +47,6 @@ class CarroCompra extends Component{
     removeFromCart(key){
         this.props.removeFromCart(key);
     }
-    updatePurchaseValue(valor){
-        // console.log('valor a restar', valor);
-        // console.log('quedaria en:', this.props.valorCompra[0] - valor);
-        this.props.subtractFromCart(valor);
-    }
     // RENDER THE PRODUCTS THAT ARE CURRENTLY SELECTED IN THE SHOPPING CART
     renderProductosCarro(item){
         // console.log('render items carro de compras');
@@ -63,13 +58,24 @@ class CarroCompra extends Component{
         return(
             <ListGroupItem key={key}>
                 <p>{producto}</p>
-                <p><span>Cantidad: {cantidad}.</span> | <span>Precio: {precio}</span> <span><Button type='button' className='btn btn-warning' onClick={() => {this.removeFromCart(key); this.updatePurchaseValue(parseInt(item.cantidad) * parseInt(item.product_select.precio))}}>Quitar</Button></span></p>
+                <p><span>Cantidad: {cantidad}.</span> | <span>Precio: {precio}</span> <span><Button type='button' className='btn btn-warning' onClick={() => {this.removeFromCart(key)} }>Quitar</Button></span></p>
             </ListGroupItem>
         );
     }
+    // RENDER THE ACTUAL VALUE OF THE CART
+    valorCompra(){
+        let valor_compra = _.reduce(this.props.carroCompra, (accu, item) => accu + item.valor_a_pagar, 0);
+        this.pasarValor(valor_compra)
+        return(
+            <span>{valor_compra}</span>
+        );
+    }
+    pasarValor(valor_compra){
+        return valor_compra
+    }
     render(){
-        console.log('render carro compras')
-        console.log(this.props.valorCompra[0] === undefined ? 0 : this.props.valorCompra[0]);
+        console.log('carro de compra')
+        console.log(this.props.carroCompra);
         return(
             // Always sticky-top works on container elements like div
             <div className="sticky-top">
@@ -105,7 +111,7 @@ class CarroCompra extends Component{
                         </ListGroup>
                         <div>
                             <hr/>
-                            <Alert color='primary'><strong>Total pedido: </strong>  {this.props.valorCompra[0] === undefined ? 0 : this.props.valorCompra[0] }</Alert>
+                            <Alert color='primary'><strong>Total pedido: </strong>  {this.props.carroCompra.length === 0 ? 0 :  this.valorCompra() }</Alert>
                         </div>
                 </ModalBody>
                     <ModalFooter>

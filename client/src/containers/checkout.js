@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Table, Alert, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import Presentacion from '../components/main_presentacion';
 import _ from 'lodash';
+import { Link } from 'react-router-dom';
 
 class Checkout extends Component {
     renderOrder(producto){
@@ -37,9 +38,16 @@ class Checkout extends Component {
             </Form>
         );
     }
+    valorCompra(){
+        let valores_a_pagar = _.map(this.props.carroCompra, item => item.valor_a_pagar);
+        let valor_total_a_pagar = _.reduce(valores_a_pagar, (accu, item) => accu + item, 0);
+        console.log(valores_a_pagar);
+        return(
+            <span>{valor_total_a_pagar}</span>
+        );
+    }
     render(){
-        console.log('checkout!');
-        console.log(this.props.valorCompra[0]);
+        console.log(this.props);
         return(
             <div>
                 <div>
@@ -48,6 +56,7 @@ class Checkout extends Component {
                 <div className="row justify-content-center">
                     <div className="container">
                         <h3 className="text-center">Su orden</h3>
+                        <Link to='/'>Volver</Link>
                         <Table>
                             <thead>
                                 <tr>
@@ -62,7 +71,7 @@ class Checkout extends Component {
                             </tbody>
                         </Table>
                         <Alert color='primary'>
-                            <strong>Total: {this.props.valorCompra[0] === undefined ? 0 : this.props.valorCompra[0]}</strong>{}
+                            <strong>Total: {this.props.carroCompra.length === 0 ? 0 : this.valorCompra()}</strong>{}
                         </Alert>
                         {this.renderFormCheckout()}
                     </div>
