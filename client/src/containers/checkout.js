@@ -22,6 +22,14 @@ class Checkout extends Component {
         event.preventDefault();
         console.log('submit');
         console.log(event.target[0].value);
+        // HAND IMPLEMENTATION FORM GETTING THE INPUTS VALUES
+        let data ={
+            nombre: event.target[0].value,
+            email: event.target[1].value,
+            direccion: event.target[2].value
+        };
+        this.props.sendOrder(data);
+
     }
     renderFormCheckout(){
         return(
@@ -53,7 +61,7 @@ class Checkout extends Component {
         );
     }
     render(){
-        console.log(this.props);
+        console.log(this.props.order);
         return(
             <div>
                 <div>
@@ -91,4 +99,4 @@ function mapStateToProps({ carroCompra, valorCompra}){
     return { carroCompra, valorCompra};
 }
 
-export default connect(mapStateToProps)(Checkout);
+export default connect(mapStateToProps, actions)(Checkout);
