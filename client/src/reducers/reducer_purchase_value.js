@@ -20,13 +20,13 @@ export default function(state=[], action){
             }
             return [...state, cartValue];
         case SUBTRACT_FROM_CART:
-            console.log('subtract from cart');
-            console.log(action.payload);
-            console.log('estado actual', state);
+            // console.log('subtract from cart');
+            // console.log(action.payload);
+            // console.log('estado actual', state);
             let newPurchaseState = [...state];
-            console.log('el nuevo estado antes de actualizcion', newPurchaseState);
+            // console.log('el nuevo estado antes de actualizcion', newPurchaseState);
             newPurchaseState = [_.reduce(newPurchaseState, (accu, item) => accu + item - action.payload, 0)];
-            console.log('nuevo estado es', newPurchaseState);
+            // console.log('nuevo estado es', newPurchaseState);
             return newPurchaseState;
     }
     return state;

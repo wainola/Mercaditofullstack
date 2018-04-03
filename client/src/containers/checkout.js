@@ -6,8 +6,6 @@ import _ from 'lodash';
 
 class Checkout extends Component {
     renderOrder(producto){
-        console.log('render order');
-        console.log(producto);
         let c = 1;
         return(
             <tr key={producto.id}>
@@ -17,19 +15,6 @@ class Checkout extends Component {
                 <th>{producto.product_select.precio}</th>
             </tr>
         );
-    }
-    renderTotal(){
-        if(this.props.carroCompra.length > 0){
-            let total = 0;
-            return (
-                <div>
-                    <hr />
-                    <Alert color='primary'>
-                        <strong>Total: </strong>{}
-                    </Alert>
-                </div>
-            );
-        }
     }
     render(){
         console.log('checkout!');
@@ -55,7 +40,9 @@ class Checkout extends Component {
                                 {this.props.carroCompra.map(this.renderOrder)}
                             </tbody>
                         </Table>
-                        {this.renderTotal ? this.renderTotal() : ''}
+                        <Alert color='primary'>
+                            <strong>Total: {this.props.valorCompra[0] === undefined ? 0 : this.props.valorCompra[0]}</strong>{}
+                        </Alert>
                     </div>
                 </div>
             </div>
