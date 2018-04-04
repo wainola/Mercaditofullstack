@@ -19,6 +19,12 @@ class Navegacion extends Component {
           <NavItem>
             <NavLink href="#">Frutas</NavLink>
           </NavItem>
+          <NavItem>
+            <Link to='/signin' className="nav-link">Login</Link>
+          </NavItem>
+          <NavItem>
+            <Link to='/signup' className="nav-link">Registro</Link>
+          </NavItem>
         </Nav>
       </div>
     );

@@ -21,7 +21,7 @@ class Checkout extends Component {
     onSubmit(event){
         event.preventDefault();
         console.log('submit');
-        console.log(event.target[0].value);
+        console.log(event.target);
     }
     renderFormCheckout(){
         return(
