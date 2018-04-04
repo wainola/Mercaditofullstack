@@ -18,13 +18,6 @@ class Signup extends Component {
                 this.props.history.push('/signin');
             }
         );
-        // fetch(`${window.location.origin}/signup`, {
-        //     method: 'POST',
-        //     body: JSON.stringify(data)
-        // }).then(response => response.json()).then(data => {
-        //     console.log(data);
-        //     this.props.history.push('/signin');
-        // })
     }
     render(){
         return(

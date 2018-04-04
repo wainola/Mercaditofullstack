@@ -8,6 +8,7 @@ import {
     NavItem,
     NavLink
 } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 class NavegacionAdmin extends Component{
     constructor(props){
@@ -38,7 +39,7 @@ class NavegacionAdmin extends Component{
                                 <NavLink href="">{this.state.email}</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/signout">Cerrar Sesión</NavLink>
+                                <Link to='/signout' className='nav-link'>Cerrar Sesión</Link>
                             </NavItem>
                         </Nav>
                     </Collapse>
