@@ -21,7 +21,7 @@ exports.saveProduct = function(req, res, next){
     let fileImage = req.files.file;
     let urlCatalogo = 'client/public/catalogo_imagenes/';
 
-    //console.log(req.files.file.name);
+    console.log(req.files.file.name);
 
     // console.log(fileImage);
     // console.log(JSON.parse(req.body.datos));

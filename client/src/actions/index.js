@@ -12,8 +12,9 @@ import {
     SUBTRACT_FROM_CART,
     SEND_ORDER
 } from './types';
+import { ROOT_URL } from '../utils/utils';
 
-const ROOT_URL = window.location.origin === 'http://localhost:3007' ? 'http://localhost:4500' : window.location.origin;
+//const ROOT_URL = window.location.origin === 'http://localhost:3007' ? 'http://localhost:4500' : window.location.origin;
 console.log('root url', ROOT_URL);
 
 export function fetchProductos(){
