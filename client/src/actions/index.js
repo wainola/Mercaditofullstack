@@ -13,10 +13,11 @@ import {
     SEND_ORDER
 } from './types';
 
-const ROOT_URL = 'http://localhost:4500';
+const ROOT_URL = window.location.origin === 'http://localhost:3007' ? 'http://localhost:4500' : window.location.origin;
+console.log('root url', ROOT_URL);
 
 export function fetchProductos(){
-    const url = `http://localhost:4500/frontAllProducts`;
+    const url = `${ROOT_URL}/frontAllProducts`;
     const request = axios.get(url);
     return{
         type: FETCH_DATA,

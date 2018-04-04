@@ -9,13 +9,22 @@ class Signup extends Component {
             password: event.target[1].value
         };
         console.log(data);
-        axios.post('http://localhost:4500/signup', data)
+        console.log(window.location.origin);
+        let ROOT_URL = `${window.location.origin === 'http://localhost:3007' ? 'http://localhost:4500' : window.location.origin}`;
+        axios.post(`${ROOT_URL}/signup`, data)
         .then(
             response => {
                 console.log(response.data);
                 this.props.history.push('/signin');
             }
         );
+        // fetch(`${window.location.origin}/signup`, {
+        //     method: 'POST',
+        //     body: JSON.stringify(data)
+        // }).then(response => response.json()).then(data => {
+        //     console.log(data);
+        //     this.props.history.push('/signin');
+        // })
     }
     render(){
         return(

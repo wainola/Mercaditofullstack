@@ -35,7 +35,13 @@ mongoose.Promise = global.Promise;
 // GET THE DEFAULT CONNECTION
 const db = mongoose.connection;
 
-db.on('error', console.error.bind(console, 'MONGODB CONNECTION ERROR:'));
+db.once('open', function(){
+    console.log('conected to mongoDB');
+});
+
+db.on('error', function(err){
+    console.log(err);
+});
 
 // EXAMPLE OF MODEL
 // const Producto = mongoose.model('productest', {name: String});

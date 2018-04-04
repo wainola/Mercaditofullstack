@@ -16,10 +16,12 @@ function tokenForUser(user){
 exports.signup = function(req, res, next){
     const email = req.body.email;
     const password = req.body.password;
+    console.log(req.body);
+    console.log('datos recibidos', email, password);
 
     User.findOne({email: email}, function(err, existingUser){
         if(err){
-            return next(err);
+            res.json({error: err});
         }
         if(existingUser){
             return res.status(422).send({error: 'Email ya definido'});
@@ -30,7 +32,7 @@ exports.signup = function(req, res, next){
         });
         user.save(function (err) {
             if (err) {
-                return next(err);
+                res.json({error: err});
             }
             res.json({ token: tokenForUser(user) });
         });
