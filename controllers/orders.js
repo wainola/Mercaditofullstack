@@ -3,6 +3,7 @@ const fs = require('fs');
 
 exports.recieveOrder = function(req, res, next){
     //res.json({msg: 'orden recibida!'});
+    console.log(req.body);
     fs.readFile('./config/config.json', function(err, data) {
         if(err){ res.json({error: 'error al abrir el archivo'}); }
         data = JSON.parse(data);

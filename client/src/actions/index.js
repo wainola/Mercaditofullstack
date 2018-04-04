@@ -9,7 +9,8 @@ import {
     FETCH_PRODUCTS,
     REMOVE_FROM_CART,
     GET_PURCHASE_VALUE,
-    SUBTRACT_FROM_CART
+    SUBTRACT_FROM_CART,
+    SEND_ORDER
 } from './types';
 
 const ROOT_URL = 'http://localhost:4500';
@@ -96,5 +97,22 @@ export function fetchProducts(){
         .then(response => {
                 dispatch({type: FETCH_PRODUCTS, payload: response});
         });
+    }
+}
+
+export function sendOrder(order){
+    console.log('send order');
+    console.log(order);
+    return function(dispatch){
+        axios.post(`${ROOT_URL}/processingOrder`, order, {
+            headers: {
+                authorization: localStorage.getItem('token')
+            }
+        })
+        .then(
+            response => {
+                dispatch({ type: SEND_ORDER, payload: response.data});
+            }
+        )
     }
 }
