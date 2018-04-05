@@ -103,8 +103,6 @@ export function fetchProducts(){
 }
 
 export function sendOrder(order){
-    console.log('send order');
-    console.log(order);
     return function(dispatch){
         axios.post(`${ROOT_URL}/processingOrder`, order, {
             headers: {

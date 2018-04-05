@@ -8,11 +8,6 @@ const upload = multer({ dest: 'uploads/' });
 const OrdersController = require('./controllers/orders');
 const db = require('./db');
 
-db.query('SELECT * FROM CLIENTE', (err, r) => {
-    if(err) { console.log(err); }
-    console.log(r);
-});
-
 // we declare the middleware interceptors
 const requireAuth = passport.authenticate('jwt', {session:false});
 const requireSignin = passport.authenticate('local', {session:false});
@@ -30,12 +25,5 @@ module.exports = function (app, CONEXION_MODELOS){
     app.get('/frontAllProducts', Productos.getAllProducts);
     app.post('/processingOrder', requireAuth, OrdersController.recieveOrder);
     // DUMMY PROCESSING TO TEST SEQUELIZE
-    app.post('/dummyCliente', (req, res, next) => {
-        connection.query('SELECT * FROM CLIENTE', (err, rows) => {
-            if(err) { console.log('error en el query'); }
-            console.log('datos recibidos');
-            console.log(rows);
-        });
-        res.json({msg: 'cliente'});
-    });
+    app.post('/dummyCliente', OrdersController.dummyOrder);
 }
