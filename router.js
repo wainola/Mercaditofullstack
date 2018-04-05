@@ -11,7 +11,7 @@ const OrdersController = require('./controllers/orders');
 const requireAuth = passport.authenticate('jwt', {session:false});
 const requireSignin = passport.authenticate('local', {session:false});
 
-module.exports = function(app){
+module.exports = function (app, CONEXION_MODELOS){
     // app.get('/', requireAuth, function(req,res){
     //     res.send({msg: "Authentication success!"});
     // });
@@ -24,5 +24,7 @@ module.exports = function(app){
     app.get('/frontAllProducts', Productos.getAllProducts);
     app.post('/processingOrder', requireAuth, OrdersController.recieveOrder);
     // DUMMY PROCESSING TO TEST SEQUELIZE
-    app.post('/dummyCliente', OrdersController.dummyOrder);
+    app.post('/dummyCliente', (req, res, next) => {
+        res.json({msg: 'cliente'});
+    });
 }

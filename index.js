@@ -8,7 +8,6 @@ const router = require('./router');
 const cors = require('cors');
 const fs = require('fs');
 const fileUpload = require('express-fileupload');
-const DB_MYSQL = require('./db');
 
 // Controllers
 const GetProductos = require('./controllers/products');
@@ -43,15 +42,6 @@ db.once('open', function(){
 
 db.on('error', function(err){
     console.log(err);
-});
-
-DB_MYSQL().sequelize
-.authenticate()
-.then(() => {
-    console.log('Connexion establecida exitosamente');
-})
-.catch(err => {
-    console.error('No se ha podido conectar a la base de datos');
 });
 
 // EXAMPLE OF MODEL
