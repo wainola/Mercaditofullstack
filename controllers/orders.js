@@ -30,3 +30,7 @@ exports.recieveOrder = function(req, res, next){
         });
     });
 }
+
+exports.dummyOrder = function(req, res, next){
+    res.json({msg: 'Dummy Cliente'});
+}

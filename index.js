@@ -7,6 +7,9 @@ const mongoose = require('mongoose');
 const router = require('./router');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
+// // PATTERN FOR SAVING THE MAPPINGS INTO THIS OBJECT
+// const DB_MAPPINGS = {};
+const sequelize = require('./db');
 
 // Controllers
 const GetProductos = require('./controllers/products');
@@ -43,6 +46,15 @@ db.on('error', function(err){
     console.log(err);
 });
 
+sequelize()
+.authenticate()
+.then(() => {
+    console.log('Connexion establecida exitosamente');
+})
+.catch(err => {
+    console.error('No se ha podido conectar a la base de datos');
+});
+
 // EXAMPLE OF MODEL
 // const Producto = mongoose.model('productest', {name: String});
 // const p1 = new Producto({name:"Cebollas Caramelizadas"});
@@ -67,3 +79,5 @@ app.post('/upload', (req, res, next) => {
 const server = http.createServer(app);
 server.listen(port);
 console.log(`Server listening on port ${port}`);
+
+module.exports = sequelize;
