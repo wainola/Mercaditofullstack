@@ -1,15 +1,22 @@
 const Sequelize = require('sequelize');
 const config = require('./config/config_db');
-let sequelize = null;
+let db = null;
 
 module.exports = () => {
-    if(!sequelize){
-        sequelize = new Sequelize(
+    if(!db){
+        const sequelize = new Sequelize(
             config.database,
             config.username,
             config.password,
             config.params
         );
+        db = {
+            sequelize,
+            Sequelize,
+            models: {}
+        };
+        const CLIENTE = sequelize.import('./model/Cliente.js');
+        db.models[CLIENTE] = CLIENTE;
     }
-    return sequelize;
+    return db;
 };

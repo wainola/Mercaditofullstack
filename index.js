@@ -6,10 +6,9 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const router = require('./router');
 const cors = require('cors');
+const fs = require('fs');
 const fileUpload = require('express-fileupload');
-// // PATTERN FOR SAVING THE MAPPINGS INTO THIS OBJECT
-// const DB_MAPPINGS = {};
-const sequelize = require('./db');
+const DB_MYSQL = require('./db');
 
 // Controllers
 const GetProductos = require('./controllers/products');
@@ -46,7 +45,7 @@ db.on('error', function(err){
     console.log(err);
 });
 
-sequelize()
+DB_MYSQL().sequelize
 .authenticate()
 .then(() => {
     console.log('Connexion establecida exitosamente');
@@ -79,5 +78,3 @@ app.post('/upload', (req, res, next) => {
 const server = http.createServer(app);
 server.listen(port);
 console.log(`Server listening on port ${port}`);
-
-module.exports = sequelize;
