@@ -1,5 +1,6 @@
 const Producto = require('../model/Producto');
 const fs = require('fs');
+const db = require('../db');
 
 exports.getAllProducts = function(req, res, next){
     const productos = Producto.find({}, function(err, productos){
@@ -22,6 +23,22 @@ exports.saveProduct = function(req, res, next){
     let urlCatalogo = 'client/public/catalogo_imagenes/';
 
     console.log(req.files.file.name);
+
+    // SETTING THE OBJECT THAT SAVES TO THE MYSQL DATABASE
+    let producto_mysql = {
+        nombre_producto: nombre,
+        cantidad: stock,
+        precio: precio,
+        tipo: tipo
+    };
+
+    db.query('INSERT INTO INVENTARIO SET ?', producto_mysql, (err, resultado) => {
+        if(err) {
+            console.log('error en la insercion en mysql');
+            return
+        }
+        console.log('datos insertados correctamente en mysql');
+    });
 
     // console.log(fileImage);
     // console.log(JSON.parse(req.body.datos));

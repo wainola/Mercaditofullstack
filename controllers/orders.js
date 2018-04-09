@@ -24,31 +24,31 @@ exports.recieveOrder = function(req, res, next){
         let last_insert_id = null;
 
         // CLIENTE AND ORDER HISTORY INSERTION
-        db.query('INSERT INTO HISTORIAL_ORDENES () VALUES ()', {}, (err, resultado) => {
-            if(err){
-                console.log('error insercion en historial ordenes', err);
-                return;
-            }
-            last_insert_id = resultado.insertId;
-            console.log('las id insertado', resultado.insertId);
-            console.log('insertado en historial ordenes con exito');
-            const cliente = {
-                id_historial_orden: last_insert_id,
-                nombre: nombre,
-                apellido: apellidos,
-                email: req.body.email,
-                direccion_cliente: req.body.direccion
-            };
-            db.query('INSERT INTO CLIENTE SET ?', cliente, (err, resultado) => {
-                if (err) {
-                    console.log(err);
-                    return;
-                }
-                insertIdCliente = resultado.insertId;
-                console.log('datos insertados exitosamente')
-                console.log('Id insertado del cliente es', insertIdCliente);
-            });
-        });
+        // db.query('INSERT INTO HISTORIAL_ORDENES () VALUES ()', {}, (err, resultado) => {
+        //     if(err){
+        //         console.log('error insercion en historial ordenes', err);
+        //         return;
+        //     }
+        //     last_insert_id = resultado.insertId;
+        //     console.log('las id insertado', resultado.insertId);
+        //     console.log('insertado en historial ordenes con exito');
+        //     const cliente = {
+        //         id_historial_orden: last_insert_id,
+        //         nombre: nombre,
+        //         apellido: apellidos,
+        //         email: req.body.email,
+        //         direccion_cliente: req.body.direccion
+        //     };
+        //     db.query('INSERT INTO CLIENTE SET ?', cliente, (err, resultado) => {
+        //         if (err) {
+        //             console.log(err);
+        //             return;
+        //         }
+        //         insertIdCliente = resultado.insertId;
+        //         console.log('datos insertados exitosamente')
+        //         console.log('Id insertado del cliente es', insertIdCliente);
+        //     });
+        // });
         
         let orden = req.body.carro_de_compra;
 
