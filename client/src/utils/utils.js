@@ -1,0 +1,1 @@
+export const ROOT_URL = `${window.location.origin === 'http://localhost:3007' ? 'http://localhost:4500' : window.location.origin}`;

@@ -9,7 +9,9 @@ class Signup extends Component {
             password: event.target[1].value
         };
         console.log(data);
-        axios.post('http://localhost:4500/signup', data)
+        console.log(window.location.origin);
+        let ROOT_URL = `${window.location.origin === 'http://localhost:3007' ? 'http://localhost:4500' : window.location.origin}`;
+        axios.post(`${ROOT_URL}/signup`, data)
         .then(
             response => {
                 console.log(response.data);

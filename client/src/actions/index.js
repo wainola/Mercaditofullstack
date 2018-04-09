@@ -12,11 +12,13 @@ import {
     SUBTRACT_FROM_CART,
     SEND_ORDER
 } from './types';
+import { ROOT_URL } from '../utils/utils';
 
-const ROOT_URL = 'http://localhost:4500';
+//const ROOT_URL = window.location.origin === 'http://localhost:3007' ? 'http://localhost:4500' : window.location.origin;
+console.log('root url', ROOT_URL);
 
 export function fetchProductos(){
-    const url = `http://localhost:4500/frontAllProducts`;
+    const url = `${ROOT_URL}/frontAllProducts`;
     const request = axios.get(url);
     return{
         type: FETCH_DATA,
@@ -101,8 +103,6 @@ export function fetchProducts(){
 }
 
 export function sendOrder(order){
-    console.log('send order');
-    console.log(order);
     return function(dispatch){
         axios.post(`${ROOT_URL}/processingOrder`, order, {
             headers: {

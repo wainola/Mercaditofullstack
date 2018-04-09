@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const router = require('./router');
 const cors = require('cors');
+const fs = require('fs');
 const fileUpload = require('express-fileupload');
 
 // Controllers
@@ -20,10 +21,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(fileUpload());
 
-router(app);
-
-const port = process.env.PORT || 4500;
-
 // DB CONNECTION
 const mongoDB = 'mongodb://localhost:27017/larmahue_market';
 
@@ -35,7 +32,17 @@ mongoose.Promise = global.Promise;
 // GET THE DEFAULT CONNECTION
 const db = mongoose.connection;
 
-db.on('error', console.error.bind(console, 'MONGODB CONNECTION ERROR:'));
+db.once('open', function () {
+    console.log('conected to mongoDB');
+});
+
+db.on('error', function (err) {
+    console.log(err);
+});
+
+router(app);
+
+const port = process.env.PORT || 4500;
 
 // EXAMPLE OF MODEL
 // const Producto = mongoose.model('productest', {name: String});
@@ -61,3 +68,5 @@ app.post('/upload', (req, res, next) => {
 const server = http.createServer(app);
 server.listen(port);
 console.log(`Server listening on port ${port}`);
+
+//module.exports = connection;
