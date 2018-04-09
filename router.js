@@ -22,5 +22,5 @@ module.exports = function(app){
     app.get('/getAllProducts', requireAuth, Productos.getAllProducts);
     app.post('/saveProduct', requireAuth, Productos.saveProduct);
     app.get('/frontAllProducts', Productos.getAllProducts);
-    app.post('/processingOrder', requireAuth, OrdersController.recieveOrder);
+    app.post('/processingOrder', OrdersController.recieveOrder);
 }
