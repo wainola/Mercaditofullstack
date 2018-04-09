@@ -23,6 +23,16 @@ exports.recieveOrder = function(req, res, next){
         let insertIdCliente = null;
         let last_insert_id = null;
 
+        // TESTING IF PROCEDURE WORKS
+        db.query(`call exists_cliente('${nombre}');`, (err, resultado) => {
+            if(err){
+                console.log('error en la llamada al procedimiento');
+                res.json({msg: 'error en la llamada al procedimiento'});
+            }
+            console.log(`el resultado del procedimiento es: ${resultado[0][0].existe === 0 ? 'existe el cliente' : 'no existe en cliente'}`);
+            res.json({ msg: `el resultado del procedimiento es: ${resultado[0][0].existe === 0 ? 'existe el cliente' : 'no existe en cliente'}`, raw_resultado: resultado});
+        })
+
         // CLIENTE AND ORDER HISTORY INSERTION
         // db.query('INSERT INTO HISTORIAL_ORDENES () VALUES ()', {}, (err, resultado) => {
         //     if(err){
