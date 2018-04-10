@@ -18,20 +18,35 @@ exports.recieveOrder = function(req, res, next){
         let nameFormat = req.body.nombre.split(' ');
         let nombre = nameFormat[0];
         let apellidos = `${nameFormat.length > 2 ? `${nameFormat[1]} ${nameFormat[2]}` : nameFormat[1] }`;
-        console.log('name format', nameFormat);
-        // FOR INSERTING THE ORDEN I NEED THE ID OF THE INSERTED CLIENT.
-        let insertIdCliente = null;
-        let last_insert_id = null;
+        let email = req.body.email;
+        let direccion = req.body.direccion;
+        let carro_de_compra = req.body.carro_de_compra;
 
-        // TESTING IF PROCEDURE WORKS
-        db.query(`call exists_cliente('${nombre}');`, (err, resultado) => {
+        console.log('PROCEDIMIENTO EXISTS_CLIENTE');
+        // PROCEDURE CALL_EXISTS_CLIENTE => CHECK IF CLIENT EXISTS
+        db.query(`call exists_cliente('${nombre}', '${apellidos}', '${email}', '${direccion}', @exito);`, (err, resultado) => {
             if(err){
                 console.log('error en la llamada al procedimiento');
-                res.json({msg: 'error en la llamada al procedimiento'});
+                res.json({msg: err});
             }
-            console.log(`el resultado del procedimiento es: ${resultado[0][0].existe === 0 ? 'existe el cliente' : 'no existe en cliente'}`);
-            res.json({ msg: `el resultado del procedimiento es: ${resultado[0][0].existe === 0 ? 'existe el cliente' : 'no existe en cliente'}`, raw_resultado: resultado});
-        })
+            console.log(`el resultado del procedimiento es:`);
+            console.log(JSON.stringify(resultado));
+            //res.json({ raw_resultado: resultado});
+        });
+        console.log('PROCEDIMIENTO INSERT_PRODUCTO_ORDEN');
+        // PROCEDURE INSERT INTO PRODUCTO_ORDEN
+        carro_de_compra.forEach((e) => {
+            db.query(`call insert_producto_orden('${e.cantidad}','${e.cantidad * e.precio}', (select id_orden from orden order by id_orden desc limit 1), '${e.nombre}', @success)`, (err, resultado) => {
+                if(err) { 
+                    console.log('error en la llamada al procedimiento');
+                    res.json({msg: err}); 
+                }
+                console.log('procedimiento llevado a cabo con exito');
+                console.log(JSON.stringify(resultado));
+            });
+        });
+
+        res.json({msg: 'procedimientos ejecutados con exito'});
 
         // CLIENTE AND ORDER HISTORY INSERTION
         // db.query('INSERT INTO HISTORIAL_ORDENES () VALUES ()', {}, (err, resultado) => {
