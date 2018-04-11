@@ -3,6 +3,7 @@ import { Nav, NavItem, NavLink } from 'reactstrap';
 import {Link} from 'react-router-dom';
 
 class Navegacion extends Component {
+  // TODO: RENDER CONTENTS OF NAVIGATIONS MAKING A FETCH REQUEST TO CATEGORIES INSIDE MYSQL
   render() {
     return (
       <div>
