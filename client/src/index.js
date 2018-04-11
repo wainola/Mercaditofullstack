@@ -7,7 +7,7 @@ import reduxPromise from 'redux-promise';
 import App from './App';
 import reducers from './reducers';
 import registerServiceWorker from './registerServiceWorker';
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrapNOW.min.css';
 import { AUTH_USER } from './actions/types';
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk, reduxPromise)(createStore);

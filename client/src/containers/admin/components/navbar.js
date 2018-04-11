@@ -6,7 +6,9 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink
+    NavLink,
+    Button,
+    Dropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
@@ -29,20 +31,18 @@ class NavegacionAdmin extends Component{
     }
     render(){
         return(
-            <div>
-                <Navbar color="faded" light expand="md" className="navbar-dark bg-dark">
-                    <NavbarBrand href="/" className="mr-auto">Mercadito</NavbarBrand>
-                    <NavbarToggler onClick={this.toggle.bind(this)} className="mr-2" />
-                    <Collapse isOpen={this.state.isOpen} navbar>
-                        <Nav navbar className="ml-auto">
-                            <NavItem>
-                                <NavLink href="">{this.state.email}</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <Link to='/signout' className='nav-link'>Cerrar Sesión</Link>
-                            </NavItem>
-                        </Nav>
-                    </Collapse>
+            <div className='navbar-translate'>
+                <Navbar light expand="md" className="navbar bg-info">
+                        <Dropdown className='mr-auto' isOpen={this.state.isOpen} toggle={this.toggle.bind(this)}>
+                            <DropdownToggle caret className='btn btn-info ml-auto h6'>
+                                Mercadito
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem header>{this.state.email}</DropdownItem>
+                                <Link to='/' className='dropdown-item'>Págna Principal</Link>
+                                <Link to='/signout' className='dropdown-item'>Cerrar Sesión</Link>
+                            </DropdownMenu>
+                        </Dropdown>
                 </Navbar>
             </div>
         );

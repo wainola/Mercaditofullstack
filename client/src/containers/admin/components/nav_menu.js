@@ -12,9 +12,11 @@ class NavMenu extends Component{
         return(
             <div>
                 <div className="row justify-content-center">
-                    <Nav tabs>
+                    <Nav tabs className='nav nav-tabs'>
                         <NavItem>
-                            <Link to={`${this.props.match.url}/ordersThisWeek`} className='nav-link'>Órdenes de ésta semana</Link>
+                            <Link className='nav-link active' to={`${this.props.match.url}/ordersThisWeek`} className='nav-link'>
+                            <i className='now-ui-icons objects_umbrella-13'></i>
+                            Órdenes de ésta semana</Link>
                         </NavItem>
                         <NavItem>
                             <Link to={`${this.props.match.url}/addProducts`} className='nav-link'>Añadir productos</Link>

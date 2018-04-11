@@ -16,10 +16,10 @@ exports.recieveOrder = function(req, res, next){
             }
         }
         let nameFormat = req.body.nombre.split(' ');
-        let nombre = nameFormat[0];
-        let apellidos = `${nameFormat.length > 2 ? `${nameFormat[1]} ${nameFormat[2]}` : nameFormat[1] }`;
-        let email = req.body.email;
-        let direccion = req.body.direccion;
+        let nombre = nameFormat[0].toLowerCase();
+        let apellidos = `${nameFormat.length > 2 ? `${nameFormat[1].toLowerCase()} ${nameFormat[2].toLowerCase()}` : nameFormat[1].toLowerCase() }`;
+        let email = req.body.email.toLowerCase();
+        let direccion = req.body.direccion.toLowerCase();
         let carro_de_compra = req.body.carro_de_compra;
 
         console.log('PROCEDIMIENTO EXISTS_CLIENTE');
@@ -36,7 +36,7 @@ exports.recieveOrder = function(req, res, next){
         console.log('PROCEDIMIENTO INSERT_PRODUCTO_ORDEN');
         // PROCEDURE INSERT INTO PRODUCTO_ORDEN
         carro_de_compra.forEach((e) => {
-            db.query(`call insert_producto_orden('${e.cantidad}','${e.cantidad * e.precio}', (select id_orden from orden order by id_orden desc limit 1), '${e.nombre_producto}', @success)`, (err, resultado) => {
+            db.query(`call insert_producto_orden('${e.cantidad}','${e.cantidad * e.precio}', (select id_orden from orden order by id_orden desc limit 1), '${e.nombre_producto.toLowerCase()}', @success)`, (err, resultado) => {
                 if(err) { 
                     console.log('error en la llamada al procedimiento');
                     res.json({msg: err}); 
@@ -93,7 +93,7 @@ exports.recieveOrder = function(req, res, next){
             from: 'Mercadito de Larmahue <mercaditodelarmahue@gmail.com',
             to: `${email}`,
             subject: 'Su pedido de productos fue enviado con exito!',
-            text: `Sus productos comprados son: \n${carro_de_compra.map(item => `item: ${JSON.stringify(item.nombre)} | Cantidad: ${JSON.stringify(item.cantidad)}\nValor a pagar: ${JSON.stringify(item.valor_a_pagar)}\n`)}`
+            text: `Sus productos comprados son: \n${carro_de_compra.map(item => `item: ${item.nombre_producto} | Cantidad: ${JSON.stringify(item.cantidad)}\nValor a pagar: ${JSON.stringify(item.valor_a_pagar)}\n`)}`
         };
 
         transporter.sendMail(mailOptions, function (error, info) {

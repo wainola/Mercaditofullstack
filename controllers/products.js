@@ -13,11 +13,11 @@ exports.getAllProducts = function(req, res, next){
 exports.saveProduct = function(req, res, next){
     // PARSING DATA TO SAVE TO THE DATABASE
     let data = JSON.parse(req.body.datos);
-    const nombre = data.nombre;
-    const descripcion = data.descripcion;
+    const nombre = data.nombre.toLowerCase();
+    const descripcion = data.descripcion.toLowerCase();
     const stock = data.stock;
     const precio = data.precio;
-    const tipo = data.tipo;
+    const tipo = data.tipo.toLowerCase();
     // IMAGE FILE TO SAVE ON PUBLIC DIRECTORY
     let fileImage = req.files.file;
     let urlCatalogo = 'client/public/catalogo_imagenes/';
@@ -29,12 +29,16 @@ exports.saveProduct = function(req, res, next){
         nombre_producto: nombre,
         cantidad: stock,
         precio: precio,
-        tipo: tipo
+        tipo: tipo,
+        descripcion: descripcion
     };
+
+    console.log('PRODUCTO A ENVIAR A MYSQL => ', producto_mysql);
 
     db.query('INSERT INTO INVENTARIO SET ?', producto_mysql, (err, resultado) => {
         if(err) {
             console.log('error en la insercion en mysql');
+            console.log(err);
             return
         }
         console.log('datos insertados correctamente en mysql');
