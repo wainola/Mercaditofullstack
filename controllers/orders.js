@@ -36,7 +36,7 @@ exports.recieveOrder = function(req, res, next){
         console.log('PROCEDIMIENTO INSERT_PRODUCTO_ORDEN');
         // PROCEDURE INSERT INTO PRODUCTO_ORDEN
         carro_de_compra.forEach((e) => {
-            db.query(`call insert_producto_orden('${e.cantidad}','${e.cantidad * e.precio}', (select id_orden from orden order by id_orden desc limit 1), '${e.nombre}', @success)`, (err, resultado) => {
+            db.query(`call insert_producto_orden('${e.cantidad}','${e.cantidad * e.precio}', (select id_orden from orden order by id_orden desc limit 1), '${e.nombre_producto}', @success)`, (err, resultado) => {
                 if(err) { 
                     console.log('error en la llamada al procedimiento');
                     res.json({msg: err}); 
@@ -46,7 +46,18 @@ exports.recieveOrder = function(req, res, next){
             });
         });
 
-        res.json({msg: 'procedimientos ejecutados con exito'});
+        console.log('PROCEDIMIENTO INSERT_VENTA');
+        // PROCEDURE INSERT_VENTA
+        db.query(`call insert_venta((select id_orden from orden order by id_orden desc limit 1))`, (err, resultado) => {
+            if(err){
+                console.log('error en el procedimiento');
+                console.log(err);
+            }
+            console.log('exito en la ejecucion del procedimiento insert ventas');
+            console.log(JSON.stringify(resultado));
+        });
+
+        let mensaje_inserciones = 'procedimientos ejecutados correctamente';
 
         // CLIENTE AND ORDER HISTORY INSERTION
         // db.query('INSERT INTO HISTORIAL_ORDENES () VALUES ()', {}, (err, resultado) => {
@@ -75,21 +86,21 @@ exports.recieveOrder = function(req, res, next){
         //     });
         // });
         
-        let orden = req.body.carro_de_compra;
+        //let orden = req.body.carro_de_compra;
 
-        // let transporter = nodemailer.createTransport(stmpConfig);
-        // let mailOptions = {
-        //     from: 'Mercadito de Larmahue <mercaditodelarmahue@gmail.com',
-        //     to: 'nrriquelme@gmail.com',
-        //     subject: 'Enviando correos desde Node.js',
-        //     text: 'Correos desde el Backend'
-        // };
+        let transporter = nodemailer.createTransport(stmpConfig);
+        let mailOptions = {
+            from: 'Mercadito de Larmahue <mercaditodelarmahue@gmail.com',
+            to: `${email}`,
+            subject: 'Su pedido de productos fue enviado con exito!',
+            text: `Sus productos comprados son: \n${carro_de_compra.map(item => `item: ${JSON.stringify(item.nombre)} | Cantidad: ${JSON.stringify(item.cantidad)}\nValor a pagar: ${JSON.stringify(item.valor_a_pagar)}\n`)}`
+        };
 
-        // transporter.sendMail(mailOptions, function (error, info) {
-        //     if (error) { res.json({ error: 'no enviado' }); }
-        //     console.log('Exito en el envio del correo');
-        //     res.send({ data_recibida: req.body, success: true });
-        // });
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) { res.json({ error: 'no enviado' }); }
+            console.log('Exito en el envio del correo');
+            res.send({ data_recibida: req.body, success: true, msg_procedimientos: mensaje_inserciones});
+        });
     });
 }
 
