@@ -33,7 +33,7 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done){
         if(user){
             done(null, user);
         }else{
-            dond(null, false);
+            done(null, false);
         }
     });
 });

@@ -65,13 +65,9 @@ class CarroCompra extends Component{
     // RENDER THE ACTUAL VALUE OF THE CART
     valorCompra(){
         let valor_compra = _.reduce(this.props.carroCompra, (accu, item) => accu + item.valor_a_pagar, 0);
-        this.pasarValor(valor_compra)
         return(
             <span>{valor_compra}</span>
         );
-    }
-    pasarValor(valor_compra){
-        return valor_compra
     }
     render(){
         console.log('carro de compra')
