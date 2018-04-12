@@ -121,6 +121,11 @@ class AddProductos extends Component{
                         name="tipo"
                         component={this.renderTextField}
                     />
+                    <Field
+                        label="Categoria"
+                        name='categoria'
+                        component={this.renderTextField}
+                    />
                     <Button type='submit' className='btn btn-success'>Guardar</Button>
                 </form>
             </div>
