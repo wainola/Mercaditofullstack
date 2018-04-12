@@ -1,6 +1,17 @@
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 const db = require('../db');
+const dbPromise = require('../db_promise');
+const config = require('../config/config_db');
+
+const DB_CONFIG = {
+    host: 'localhost',
+    user: config.username,
+    password: config.password,
+    database: 'mercadito_de_larmahue'
+};
+
+const DB_PRO = new dbPromise(DB_CONFIG);
 
 exports.recieveOrder = function(req, res, next){
     //res.json({msg: 'orden recibida!'});
@@ -24,38 +35,73 @@ exports.recieveOrder = function(req, res, next){
 
         console.log('PROCEDIMIENTO EXISTS_CLIENTE');
         // PROCEDURE CALL_EXISTS_CLIENTE => CHECK IF CLIENT EXISTS
-        db.query(`call exists_cliente('${nombre}', '${apellidos}', '${email}', '${direccion}', @exito);`, (err, resultado) => {
-            if(err){
-                console.log('error en la llamada al procedimiento');
-                res.json({msg: err});
-            }
-            console.log(`el resultado del procedimiento es:`);
-            console.log(JSON.stringify(resultado));
-            //res.json({ raw_resultado: resultado});
-        });
-        console.log('PROCEDIMIENTO INSERT_PRODUCTO_ORDEN');
-        // PROCEDURE INSERT INTO PRODUCTO_ORDEN
-        carro_de_compra.forEach((e) => {
-            db.query(`call insert_producto_orden('${e.cantidad}','${e.cantidad * e.precio}', (select id_orden from orden order by id_orden desc limit 1), '${e.nombre_producto.toLowerCase()}', @success)`, (err, resultado) => {
-                if(err) { 
-                    console.log('error en la llamada al procedimiento');
-                    res.json({msg: err}); 
-                }
-                console.log('procedimiento llevado a cabo con exito');
-                console.log(JSON.stringify(resultado));
-            });
-        });
 
-        console.log('PROCEDIMIENTO INSERT_VENTA');
-        // PROCEDURE INSERT_VENTA
-        db.query(`call insert_venta((select id_orden from orden order by id_orden desc limit 1))`, (err, resultado) => {
-            if(err){
-                console.log('error en el procedimiento');
-                console.log(err);
-            }
-            console.log('exito en la ejecucion del procedimiento insert ventas');
-            console.log(JSON.stringify(resultado));
+        let flag = false;
+
+        DB_PRO.query(`call exists_cliente('${nombre}', '${apellidos}', '${email}', '${direccion}', @exito);`)
+        .then(resultado => {
+            console.log('PROCEDIMIENTO EXIST SCLIENTE EJECUTADO EXISTOSAMENTE');
+
+            console.log('PROCEDIMIENTO INSERT_PRODUCTO_ORDEN A EJECUTAR');
+
+            carro_de_compra.forEach((e) => {
+
+                return DB_PRO.query(`call insert_producto_orden('${e.cantidad}','${e.cantidad * e.precio}', (select id_orden from orden order by id_orden desc limit 1), '${e.nombre_producto.toLowerCase()}', @success);`)
+                .then(resultado => {
+                    console.log('PROCEDIMIENTO INSERT_PRODUCTO_ORDEN EJECUTADO EXITOSAMENTE');
+                })
+                .catch(err => {
+                    console.log('ERROR EN EL PROCEDIMIENTO INSERT_PRODUCTO_ORDEN');
+                    console.log(err);
+                });
+            });
+            console.log('PROCEDIMIENTO INSERT_VENTA A EJECUTAR');
+            return DB_PRO.query(`call insert_venta((select id_orden from orden order by id_orden desc limit 1))`)
+                .then(resultado => {
+                    console.log('PROCEDIMIENTO INSERT_VENTA EJECUTADO EXITOSAMENTE');
+                    flag = true;
+                })
+                .catch(err => {
+                    console.log('ERROR EN EL PROCEDIMIENTO INSERT_VENTA');
+                    console.log(err);
+                });
+            
+        })
+        .catch(err => {
+            console.log('ERROR EN EL PROCEDIMIENTO EXISTS CLIENTE')
         });
+        // db.query(`call exists_cliente('${nombre}', '${apellidos}', '${email}', '${direccion}', @exito);`, (err, resultado) => {
+        //     if(err){
+        //         console.log('error en la llamada al procedimiento');
+        //         res.json({msg: err});
+        //     }
+        //     console.log(`el resultado del procedimiento es:`);
+        //     console.log(JSON.stringify(resultado));
+        //     //res.json({ raw_resultado: resultado});
+        // });
+        // console.log('PROCEDIMIENTO INSERT_PRODUCTO_ORDEN');
+        // // PROCEDURE INSERT INTO PRODUCTO_ORDEN
+        // carro_de_compra.forEach((e) => {
+        //     db.query(`call insert_producto_orden('${e.cantidad}','${e.cantidad * e.precio}', (select id_orden from orden order by id_orden desc limit 1), '${e.nombre_producto.toLowerCase()}', @success)`, (err, resultado) => {
+        //         if(err) { 
+        //             console.log('error en la llamada al procedimiento');
+        //             res.json({msg: err}); 
+        //         }
+        //         console.log('procedimiento llevado a cabo con exito');
+        //         console.log(JSON.stringify(resultado));
+        //     });
+        // });
+
+        // console.log('PROCEDIMIENTO INSERT_VENTA');
+        // // PROCEDURE INSERT_VENTA
+        // db.query(`call insert_venta((select id_orden from orden order by id_orden desc limit 1))`, (err, resultado) => {
+        //     if(err){
+        //         console.log('error en el procedimiento');
+        //         console.log(err);
+        //     }
+        //     console.log('exito en la ejecucion del procedimiento insert ventas');
+        //     console.log(JSON.stringify(resultado));
+        // });
 
         let mensaje_inserciones = 'procedimientos ejecutados correctamente';
 
