@@ -26,4 +26,5 @@ module.exports = function (app, CONEXION_MODELOS){
     app.post('/processingOrder', OrdersController.recieveOrder);
     // DUMMY PROCESSING TO TEST SEQUELIZE
     app.post('/dummyCliente', OrdersController.dummyOrder);
+    app.get('/ordersOfTheWeek',requireAuth, OrdersController.OrdersOfTheWeek);
 }

@@ -68,69 +68,11 @@ exports.recieveOrder = function(req, res, next){
             
         })
         .catch(err => {
-            console.log('ERROR EN EL PROCEDIMIENTO EXISTS CLIENTE')
+            console.log('ERROR EN EL PROCEDIMIENTO EXISTS CLIENTE');
+            console.log(err);
         });
-        // db.query(`call exists_cliente('${nombre}', '${apellidos}', '${email}', '${direccion}', @exito);`, (err, resultado) => {
-        //     if(err){
-        //         console.log('error en la llamada al procedimiento');
-        //         res.json({msg: err});
-        //     }
-        //     console.log(`el resultado del procedimiento es:`);
-        //     console.log(JSON.stringify(resultado));
-        //     //res.json({ raw_resultado: resultado});
-        // });
-        // console.log('PROCEDIMIENTO INSERT_PRODUCTO_ORDEN');
-        // // PROCEDURE INSERT INTO PRODUCTO_ORDEN
-        // carro_de_compra.forEach((e) => {
-        //     db.query(`call insert_producto_orden('${e.cantidad}','${e.cantidad * e.precio}', (select id_orden from orden order by id_orden desc limit 1), '${e.nombre_producto.toLowerCase()}', @success)`, (err, resultado) => {
-        //         if(err) { 
-        //             console.log('error en la llamada al procedimiento');
-        //             res.json({msg: err}); 
-        //         }
-        //         console.log('procedimiento llevado a cabo con exito');
-        //         console.log(JSON.stringify(resultado));
-        //     });
-        // });
-
-        // console.log('PROCEDIMIENTO INSERT_VENTA');
-        // // PROCEDURE INSERT_VENTA
-        // db.query(`call insert_venta((select id_orden from orden order by id_orden desc limit 1))`, (err, resultado) => {
-        //     if(err){
-        //         console.log('error en el procedimiento');
-        //         console.log(err);
-        //     }
-        //     console.log('exito en la ejecucion del procedimiento insert ventas');
-        //     console.log(JSON.stringify(resultado));
-        // });
 
         let mensaje_inserciones = 'procedimientos ejecutados correctamente';
-
-        // CLIENTE AND ORDER HISTORY INSERTION
-        // db.query('INSERT INTO HISTORIAL_ORDENES () VALUES ()', {}, (err, resultado) => {
-        //     if(err){
-        //         console.log('error insercion en historial ordenes', err);
-        //         return;
-        //     }
-        //     last_insert_id = resultado.insertId;
-        //     console.log('las id insertado', resultado.insertId);
-        //     console.log('insertado en historial ordenes con exito');
-        //     const cliente = {
-        //         id_historial_orden: last_insert_id,
-        //         nombre: nombre,
-        //         apellido: apellidos,
-        //         email: req.body.email,
-        //         direccion_cliente: req.body.direccion
-        //     };
-        //     db.query('INSERT INTO CLIENTE SET ?', cliente, (err, resultado) => {
-        //         if (err) {
-        //             console.log(err);
-        //             return;
-        //         }
-        //         insertIdCliente = resultado.insertId;
-        //         console.log('datos insertados exitosamente')
-        //         console.log('Id insertado del cliente es', insertIdCliente);
-        //     });
-        // });
         
         //let orden = req.body.carro_de_compra;
 
@@ -147,6 +89,30 @@ exports.recieveOrder = function(req, res, next){
             console.log('Exito en el envio del correo');
             res.send({ data_recibida: req.body, success: true, msg_procedimientos: mensaje_inserciones});
         });
+    });
+}
+
+exports.OrdersOfTheWeek = function(req, res, next){
+    DB_PRO.query(`SELECT
+                CONCAT(C.NOMBRE, ' ', C.APELLIDO) AS 'NOMBRE_CLIENTE', C.EMAIL, C.DIRECCION_CLIENTE,
+                DATE_FORMAT(HIST.FECHA_ORDEN, '%d/%m/%y %H:%i:%S') AS 'FECHA_ORDEN',
+                LI.NOMBRE AS 'NOMBRE_PRODUCTO',
+                PO.CANTIDAD_LLEVADA, PO.MONTO 
+                FROM CLIENTE C
+                JOIN ORDEN O ON C.ID_CLIENTE = O.ID_CLIENTE
+                JOIN HISTORIAL_ORDENES HIST ON O.ID_HISTORIAL_ORDEN = HIST.ID_HISTORIAL
+                JOIN PRODUCTO_ORDEN PO ON O.ID_ORDEN = PO.ID_ORDEN
+                JOIN PRODUCTO PROD ON PO.ID_PRODUCTO = PROD.PRODUCTO_ID
+                JOIN LISTADO_PRODUCTOS LI ON PROD.LISTADO_PRODUCTO_ID = LI.LISTADO_PRODUCTO_ID;`)
+    .then(resultado => {
+        let r = resultado.map(item => {
+            return {nombre: item.NOMBRE_CLIENTE, email: item.EMAIL, direccion: item.DIRECCION_CLIENTE, fecha_orden: item.FECHA_ORDEN, producto_pedido: item.NOMBRE_PRODUCTO, cantidad: item.CANTIDAD_LLEVADA, monto: item.MONTO }
+        });
+        
+        res.json({data: r});
+    })
+    .catch(err => {
+        res.json({error: err});
     });
 }
 
