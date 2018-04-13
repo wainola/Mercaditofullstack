@@ -24,6 +24,7 @@ class Checkout extends Component {
             });
             // RESETING THE FORM
             document.forms[0].reset();
+            this.props.history.push('/');
         }
     }
     renderOrder(producto){

@@ -46,29 +46,31 @@ class Signin extends Component {
         // HANDLESUBMIT ITS A PROPS OF THE REDUX-FORM
         const { handleSubmit } = this.props;
         return (
-            <div className="row justify-content-center login">
-                <div className="card">
-                    <div className="card-body">
-                        <h3>Ingreso usuarios</h3>
-                        <form onSubmit={handleSubmit(this.onSubmitForm.bind(this))}>
-                            <Field
-                                label="Usuario"
-                                name="email"
-                                component={this.renderField}
-                            />
-                            <Field
-                                label="Contraseña"
-                                name="password"
-                                component={this.renderField}
-                            />
-                            <button type="submit" className="btn btn-success">Ingresar</button>
-                            <Link
-                                to="/"
-                                className="btn btn-danger"
-                                style={{ marginLeft: "5px" }}
-                            >Cancelar</Link>
-                            {this.renderAlert()}
-                        </form>
+            <div className="container">
+                <div className="row justify-content-center">
+                    <div className="card">
+                        <div className="card-body">
+                            <h3>Ingreso usuarios</h3>
+                            <form onSubmit={handleSubmit(this.onSubmitForm.bind(this))}>
+                                <Field
+                                    label="Usuario"
+                                    name="email"
+                                    component={this.renderField}
+                                />
+                                <Field
+                                    label="Contraseña"
+                                    name="password"
+                                    component={this.renderField}
+                                />
+                                <button type="submit" className="btn btn-success">Ingresar</button>
+                                <Link
+                                    to="/"
+                                    className="btn btn-danger"
+                                    style={{ marginLeft: "5px" }}
+                                >Cancelar</Link>
+                                {this.renderAlert()}
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -8,6 +8,8 @@ import App from './App';
 import reducers from './reducers';
 import registerServiceWorker from './registerServiceWorker';
 //import 'bootstrap/dist/css/bootstrapNOW.min.css';
+import './assets/css/bootstrap.min.css';
+import './assets/css/now-ui-kit.css';
 import { AUTH_USER } from './actions/types';
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk, reduxPromise)(createStore);
