@@ -94,7 +94,7 @@ exports.recieveOrder = function(req, res, next){
 
 exports.OrdersOfTheWeek = function(req, res, next){
     DB_PRO.query(`SELECT
-                CONCAT(C.NOMBRE, ' ', C.APELLIDO) AS 'NOMBRE_CLIENTE', C.EMAIL, C.DIRECCION_CLIENTE,
+                C.ID_CLIENTE, CONCAT(C.NOMBRE, ' ', C.APELLIDO) AS 'NOMBRE_CLIENTE', C.EMAIL, C.DIRECCION_CLIENTE,
                 DATE_FORMAT(HIST.FECHA_ORDEN, '%d/%m/%y %H:%i:%S') AS 'FECHA_ORDEN',
                 LI.NOMBRE AS 'NOMBRE_PRODUCTO',
                 PO.CANTIDAD_LLEVADA, PO.MONTO 
@@ -106,10 +106,24 @@ exports.OrdersOfTheWeek = function(req, res, next){
                 JOIN LISTADO_PRODUCTOS LI ON PROD.LISTADO_PRODUCTO_ID = LI.LISTADO_PRODUCTO_ID;`)
     .then(resultado => {
         let r = resultado.map(item => {
-            return {nombre: item.NOMBRE_CLIENTE, email: item.EMAIL, direccion: item.DIRECCION_CLIENTE, fecha_orden: item.FECHA_ORDEN, producto_pedido: item.NOMBRE_PRODUCTO, cantidad: item.CANTIDAD_LLEVADA, monto: item.MONTO }
+            return {id_cliente: item.ID_CLIENTE, nombre: item.NOMBRE_CLIENTE, email: item.EMAIL, direccion: item.DIRECCION_CLIENTE, fecha_orden: item.FECHA_ORDEN, producto_pedido: item.NOMBRE_PRODUCTO, cantidad: item.CANTIDAD_LLEVADA, monto: item.MONTO }
         });
-        
-        res.json({data: r});
+        // QUERY FOR THE PURCHASE TOTAL AMOUNT
+        return DB_PRO.query(`select
+                            concat(c.nombre, ' ', c.apellido) as 'cliente',
+                            monto_venta as 'monto'
+                            from venta
+                            join orden o on venta.id_orden = o.id_orden
+                            join cliente c on c.id_cliente = o.id_cliente;`)
+        .then(resultado => {
+            let r2 = resultado.map(item => {
+                return { cliente: item.cliente, monto: item.monto }
+            });
+            res.json({ data: r, montos: r2 });
+        })
+        .catch(err => {
+            res.json({error: err});
+        })
     })
     .catch(err => {
         res.json({error: err});
