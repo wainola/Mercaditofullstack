@@ -93,20 +93,20 @@ exports.recieveOrder = function(req, res, next){
 }
 
 exports.OrdersOfTheWeek = function(req, res, next){
-    DB_PRO.query(`SELECT
-                C.ID_CLIENTE, CONCAT(C.NOMBRE, ' ', C.APELLIDO) AS 'NOMBRE_CLIENTE', C.EMAIL, C.DIRECCION_CLIENTE,
-                DATE_FORMAT(HIST.FECHA_ORDEN, '%d/%m/%y %H:%i:%S') AS 'FECHA_ORDEN',
-                LI.NOMBRE AS 'NOMBRE_PRODUCTO',
-                PO.CANTIDAD_LLEVADA, PO.MONTO 
-                FROM CLIENTE C
-                JOIN ORDEN O ON C.ID_CLIENTE = O.ID_CLIENTE
-                JOIN HISTORIAL_ORDENES HIST ON O.ID_HISTORIAL_ORDEN = HIST.ID_HISTORIAL
-                JOIN PRODUCTO_ORDEN PO ON O.ID_ORDEN = PO.ID_ORDEN
-                JOIN PRODUCTO PROD ON PO.ID_PRODUCTO = PROD.PRODUCTO_ID
-                JOIN LISTADO_PRODUCTOS LI ON PROD.LISTADO_PRODUCTO_ID = LI.LISTADO_PRODUCTO_ID;`)
+    DB_PRO.query(`select
+                c.id_cliente, concat(c.nombre, ' ', c.apellido) as 'nombre_cliente', c.email, c.direccion_cliente,
+                date_format(hist.fecha_orden, '%d/%m/%y %h:%i:%s') as 'fecha_orden',
+                li.nombre as 'nombre_producto',
+                po.cantidad_llevada, po.monto 
+                from cliente c
+                join orden o on c.id_cliente = o.id_cliente
+                join historial_ordenes hist on o.id_historial_orden = hist.id_historial
+                join producto_orden po on o.id_orden = po.id_orden
+                join producto prod on po.id_producto = prod.producto_id
+                join listado_productos li on prod.listado_producto_id = li.listado_producto_id;`)
     .then(resultado => {
         let r = resultado.map(item => {
-            return {id_cliente: item.ID_CLIENTE, nombre: item.NOMBRE_CLIENTE, email: item.EMAIL, direccion: item.DIRECCION_CLIENTE, fecha_orden: item.FECHA_ORDEN, producto_pedido: item.NOMBRE_PRODUCTO, cantidad: item.CANTIDAD_LLEVADA, monto: item.MONTO }
+            return {id_cliente: item.id_cliente, nombre: item.nombre_cliente, email: item.email, direccion: item.direccion_cliente, fecha_orden: item.fecha_orden, producto_pedido: item.nombre_producto, cantidad: item.cantidad_llevada, monto: item.monto }
         });
         // QUERY FOR THE PURCHASE TOTAL AMOUNT
         return DB_PRO.query(`select
