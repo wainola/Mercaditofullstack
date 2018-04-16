@@ -13,10 +13,10 @@ class OrdersThisWeek extends Component{
         }
         this.modalDetalles = this.modalDetalles.bind(this);
     }
-    componentDidMount(){
-        this.props.ordersOfTheWeek();
-        console.log(this.props);
-    }
+    // componentDidMount(){
+    //     this.props.ordersOfTheWeek();
+    //     console.log(this.props);
+    // }
     modalDetalles(data, monto_total){
         this.setState({modal: !this.state.modal});
         console.log('modal detalles');
@@ -29,7 +29,7 @@ class OrdersThisWeek extends Component{
     }
     tableInfo(datos){
         //console.log(datos);
-
+        console.log('Datos recibidos');
         return(
                 <tr key={datos.id}>
                     <th>{datos.id}</th>
