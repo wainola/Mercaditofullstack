@@ -93,6 +93,7 @@ exports.recieveOrder = function(req, res, next){
 }
 
 exports.OrdersOfTheWeek = function(req, res, next){
+    // THIS IS NOT FILTER BY DATE => INSTEAD IS RETURNING ALL THE ORDER IN THE DATABASE
     DB_PRO.query(`select
                 c.id_cliente, concat(c.nombre, ' ', c.apellido) as 'nombre_cliente', c.email, c.direccion_cliente,
                 date_format(hist.fecha_orden, '%d/%m/%y %h:%i:%s') as 'fecha_orden',
