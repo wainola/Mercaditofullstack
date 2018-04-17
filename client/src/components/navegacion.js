@@ -3,6 +3,7 @@ import { Nav, NavItem, NavLink } from 'reactstrap';
 import {Link} from 'react-router-dom';
 
 class Navegacion extends Component {
+  // TODO: RENDER CONTENTS OF NAVIGATIONS MAKING A FETCH REQUEST TO CATEGORIES INSIDE MYSQL
   render() {
     return (
       <div>
@@ -20,10 +21,10 @@ class Navegacion extends Component {
             <NavLink href="#">Frutas</NavLink>
           </NavItem>
           <NavItem>
-            <Link to="/signin" className="btn border-warning">Login</Link>
+            <Link to='/signin' className="nav-link">Login</Link>
           </NavItem>
           <NavItem>
-            <Link to="/admin" className="btn border-warning" style={{ marginLeft: "5px" }}>Admin</Link>
+            <Link to='/signup' className="nav-link">Registro</Link>
           </NavItem>
         </Nav>
       </div>

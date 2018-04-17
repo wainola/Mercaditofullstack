@@ -38,11 +38,6 @@ class ProductListing extends Component{
             let valorProducto = parseInt(JSON.parse(event.target.dataset.producto).precio) * parseInt(this.state.cantidad);
             this.setState({ id_actual: JSON.parse(event.target.dataset.producto).id})
             this.props.addToCart({ product_select: JSON.parse(event.target.dataset.producto), cantidad: this.state.cantidad, id: JSON.parse(event.target.dataset.producto).id, valor_a_pagar: valorProducto});
-            //console.log(this.props.carroCompra);
-            // let precio_cantidad = { precio: parseInt(JSON.parse(event.target.dataset.producto).precio), cantidad: parseInt(this.state.cantidad) };
-            // let nombre_producto = JSON.parse(event.target.dataset.producto).nombre;
-            // //console.log(nombre_producto);
-            // this.props.purchaseValue(precio_cantidad, nombre_producto);
         }
     }
     renderProductos(productos){
@@ -56,13 +51,10 @@ class ProductListing extends Component{
 
                     <img className="img-fluid" src={`${window.location.origin}${productos.urlImagen}`} alt="Card image cap" />
                     <div className="card-body">
-                        <h4 className="card-title">{productos.nombre}</h4>
-                        <p className="card-text">{productos.descripcion}</p>
-                        <p className="card-text">Precio: {productos.precio} {productos.tipo}</p>
-                        <div className="row">
-                            <div className="col">
-                                <h5>Seleccionar cantidad</h5>
-                            </div>
+                        <h4 className="card-title text-center">{productos.nombre.toUpperCase()}</h4>
+                        <p className="card-text text-center">{productos.descripcion}</p>
+                        <p className="card-text text-center">Precio: {productos.precio} por {productos.tipo}</p>
+                        <div className="row justify-content-center">
                             <div className="row">
                                 <div className="col">
                                     <div className="form-group">
@@ -112,7 +104,7 @@ function mapStateToProps({ productos, carroCompra, valorCompra }){
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({ addToCart, purchaseValue }, dispatch);
+    return bindActionCreators({ addToCart }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductListing);

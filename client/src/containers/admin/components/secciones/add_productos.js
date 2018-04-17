@@ -6,6 +6,7 @@ import { Button } from 'reactstrap';
 import { FormGroup, Label, Input } from 'reactstrap';
 import axios from 'axios';
 import swal from 'sweetalert';
+import { ROOT_URL } from '../../../../utils/utils';
 
 
 class AddProductos extends Component{
@@ -51,8 +52,9 @@ class AddProductos extends Component{
         // this.props.addNewProduct({data});
         // this.props.reset();
         //console.log(this.props.productos);
+        console.log('previo añadir producto url:', ROOT_URL);
         const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-        fetch('http://localhost:4500/saveProduct', {
+        fetch(`${ROOT_URL}/saveProduct`, {
             method: 'POST',
             body: data,
             headers: {
@@ -117,6 +119,11 @@ class AddProductos extends Component{
                     <Field
                         label="Tipo"
                         name="tipo"
+                        component={this.renderTextField}
+                    />
+                    <Field
+                        label="Categoria"
+                        name='categoria'
                         component={this.renderTextField}
                     />
                     <Button type='submit' className='btn btn-success'>Guardar</Button>
