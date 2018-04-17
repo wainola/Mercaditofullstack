@@ -14,7 +14,7 @@ export default function(state=[], action){
             // BUT NOT DUPLICATES FOR ITEMS AND PURCHASES AMOUNT
             // SO WE NEED TO PROCESS THIS DUPLICATES ITEMS BEFORE THE RENDER
             let a_names = _.uniqBy(action.payload.data, 'nombre').map(item => { 
-                return { id: item.id_cliente, nombre: item.nombre, email: item.email, direccion: item.direccion }
+                return { id: item.id_cliente, nombre: item.nombre, email: item.email, direccion: item.direccion, fecha_orden: item.fecha_orden }
             });
             let a_items = _.groupBy(action.payload.data, 'id_cliente');
             let compras = [];
