@@ -10,7 +10,8 @@ import {
     REMOVE_FROM_CART,
     GET_PURCHASE_VALUE,
     SUBTRACT_FROM_CART,
-    SEND_ORDER
+    SEND_ORDER,
+    ORDERS_OF_THE_WEEK
 } from './types';
 import { ROOT_URL } from '../utils/utils';
 
@@ -115,4 +116,19 @@ export function sendOrder(order){
             }
         )
     }
+}
+
+export function ordersOfTheWeek(){
+    return function(dispatch){
+        axios.get(`${ROOT_URL}/ordersOfTheWeek`, {
+            headers: {
+                authorization: localStorage.getItem('token')
+            }
+        })
+        .then(
+            response => {
+                dispatch({type: ORDERS_OF_THE_WEEK, payload: response.data});
+            }
+        )
+    }    
 }

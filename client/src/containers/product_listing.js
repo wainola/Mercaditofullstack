@@ -51,13 +51,10 @@ class ProductListing extends Component{
 
                     <img className="img-fluid" src={`${window.location.origin}${productos.urlImagen}`} alt="Card image cap" />
                     <div className="card-body">
-                        <h4 className="card-title">{productos.nombre}</h4>
-                        <p className="card-text">{productos.descripcion}</p>
-                        <p className="card-text">Precio: {productos.precio} {productos.tipo}</p>
-                        <div className="row">
-                            <div className="col">
-                                <h5>Seleccionar cantidad</h5>
-                            </div>
+                        <h4 className="card-title text-center">{productos.nombre.toUpperCase()}</h4>
+                        <p className="card-text text-center">{productos.descripcion}</p>
+                        <p className="card-text text-center">Precio: {productos.precio} por {productos.tipo}</p>
+                        <div className="row justify-content-center">
                             <div className="row">
                                 <div className="col">
                                     <div className="form-group">

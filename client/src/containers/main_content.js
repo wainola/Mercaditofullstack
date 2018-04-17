@@ -6,6 +6,7 @@ import ProductListing from './product_listing';
 import Navegacion from '../components/navegacion';
 import CarroCompra from '../containers/carro_de_compras';
 import Presentacion from '../components/main_presentacion';
+import Footer from '../components/footer';
 
 class MainContent extends Component{
     constructor(props){
@@ -35,7 +36,7 @@ class MainContent extends Component{
                     <div className="row justify-content-center">
                         <div className="container">
                             <CarroCompra />
-                            <h2 className="text-center">Nuestros Productos</h2>
+                            {/* <h2 className="text-center">Nuestros Productos</h2> */}
                             <br />
                             <div className="row justify-content-center">
                                 <Navegacion />
@@ -49,6 +50,7 @@ class MainContent extends Component{
                         </div>
                     </div>
                 </div>
+                <Footer />
             </div>
         );
     }

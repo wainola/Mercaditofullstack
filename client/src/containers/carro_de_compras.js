@@ -70,8 +70,8 @@ class CarroCompra extends Component{
         );
     }
     render(){
-        console.log('carro de compra')
-        console.log(this.props.carroCompra);
+        // console.log('carro de compra')
+        // console.log(this.props.carroCompra);
         return(
             // Always sticky-top works on container elements like div
             <div className="sticky-top">
