@@ -1,13 +1,12 @@
 const Producto = require('../model/Producto');
 const fs = require('fs');
-const db = require('../db');
 const dbPromise = require('../db_promise');
 const config = require('../config/config_db');
 
 // CONFIG DATA FOR THE DB PROMISE OBJECT
 const DB_CONFIG = {
     host: 'localhost',
-    user: config.username,
+    user: config.user,
     password: config.password,
     database: 'mercadito_de_larmahue'
 };

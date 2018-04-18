@@ -1,12 +1,11 @@
 const nodemailer = require('nodemailer');
 const fs = require('fs');
-const db = require('../db');
 const dbPromise = require('../db_promise');
 const config = require('../config/config_db');
 
 const DB_CONFIG = {
     host: 'localhost',
-    user: config.username,
+    user: config.user,
     password: config.password,
     database: 'mercadito_de_larmahue'
 };
@@ -129,6 +128,35 @@ exports.OrdersOfTheWeek = function(req, res, next){
     .catch(err => {
         res.json({error: err});
     });
+}
+
+exports.orderHistory = function(req, res, next){
+    // EXECUTING PROCEDURES ON DB
+    DB_PRO.query(`call get_fecha(@fecha);`)
+    .then(resultado => {
+        // res.json({res: resultado});
+        return DB_PRO.query(`call orders_of_the_week(@fecha);`)
+        .then(resultado2 => {
+            return DB_PRO.query('select * from orders_of_the_week;')
+            .then(resQuery => {
+                res.json({data: resQuery});
+                return DB_PRO.query('truncate orders_of_the_week');
+            })
+            .catch(err => {
+                console.log(err);
+                res.json({error: err});
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            res.json({error: err});
+        })
+    })
+    .catch(err => {
+        console.log(err);
+        res.json({error: err});
+    });
+    //res.json({data: 'historial de ordenes'});
 }
 
 exports.dummyOrder = function(req, res, next){

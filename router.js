@@ -6,7 +6,6 @@ const Productos = require('./controllers/products');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const OrdersController = require('./controllers/orders');
-const db = require('./db');
 
 // we declare the middleware interceptors
 const requireAuth = passport.authenticate('jwt', {session:false});
@@ -27,4 +26,5 @@ module.exports = function (app, CONEXION_MODELOS){
     // DUMMY PROCESSING TO TEST SEQUELIZE
     app.post('/dummyCliente', OrdersController.dummyOrder);
     app.get('/ordersOfTheWeek',requireAuth, OrdersController.OrdersOfTheWeek);
+    app.get('/orderHistory', requireAuth, OrdersController.orderHistory);
 }
