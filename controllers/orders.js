@@ -93,39 +93,56 @@ exports.recieveOrder = function(req, res, next){
 
 exports.OrdersOfTheWeek = function(req, res, next){
     // THIS IS NOT FILTER BY DATE => INSTEAD IS RETURNING ALL THE ORDER IN THE DATABASE
-    DB_PRO.query(`select
-                c.id_cliente, concat(c.nombre, ' ', c.apellido) as 'nombre_cliente', c.email, c.direccion_cliente,
-                date_format(hist.fecha_orden, '%d/%m/%y %h:%i:%s') as 'fecha_orden',
-                li.nombre as 'nombre_producto',
-                po.cantidad_llevada, po.monto 
-                from cliente c
-                join orden o on c.id_cliente = o.id_cliente
-                join historial_ordenes hist on o.id_historial_orden = hist.id_historial
-                join producto_orden po on o.id_orden = po.id_orden
-                join producto prod on po.id_producto = prod.producto_id
-                join listado_productos li on prod.listado_producto_id = li.listado_producto_id;`)
+    DB_PRO.query(`call get_fecha(@fecha);`)
     .then(resultado => {
-        let r = resultado.map(item => {
-            return {id_cliente: item.id_cliente, nombre: item.nombre_cliente, email: item.email, direccion: item.direccion_cliente, fecha_orden: item.fecha_orden, producto_pedido: item.nombre_producto, cantidad: item.cantidad_llevada, monto: item.monto }
-        });
-        // QUERY FOR THE PURCHASE TOTAL AMOUNT
-        return DB_PRO.query(`select
-                            concat(c.nombre, ' ', c.apellido) as 'cliente',
-                            monto_venta as 'monto'
-                            from venta
-                            join orden o on venta.id_orden = o.id_orden
-                            join cliente c on c.id_cliente = o.id_cliente;`)
-        .then(resultado => {
-            let r2 = resultado.map(item => {
-                return { cliente: item.cliente, monto: item.monto }
-            });
-            res.json({ data: r, montos: r2 });
+        return DB_PRO.query(`call orders_of_the_week(@fecha);`)
+        .then(resultadoQuery => {
+            return DB_PRO.query(`select
+                            id_cliente, 
+                            nombre_cliente,
+                            email_cliente,
+                            direccion_cliente,
+                            date_format(fecha_orden, '%d/%m/%y %h:%i:%s') as 'fecha_orden',
+                            nombre_producto,
+                            cantidad_llevada,
+                            monto_por_cantidad
+                            from orders_of_the_week
+                            `)
+            .then(resultadoQuery2 => {
+                let r = resultadoQuery2.map(item => {
+                    return {id_cliente: item.id_cliente, nombre: item.nombre_cliente, email: item.email_cliente, direccion: item.direccion_cliente, fecha_orden: item.fecha_orden, producto_pedido: item.nombre_producto, cantidad: item.cantidad_llevada, monto: item.monto_por_cantidad }
+                });
+                // QUERY FOR THE PURCHASE TOTAL AMOUNT
+                return DB_PRO.query(`select
+                concat(c.nombre, ' ', c.apellido) as 'cliente',
+                monto_venta as 'monto'
+                from venta
+                join orden o on venta.id_orden = o.id_orden
+                join cliente c on c.id_cliente = o.id_cliente;`)
+                .then(resultadoQueryVentas => {
+                    let r2 = resultadoQueryVentas.map(item => {
+                        return { cliente: item.cliente, monto: item.monto }
+                    });
+                    res.json({data: r, montos: r2});
+                    return DB_PRO.query('truncate orders_of_the_week');
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.json({error: err});
+                })
+            })
+            .catch(err => {
+                console.log(err);
+                res.json({error: err});
+            })
         })
         .catch(err => {
+            console.log(err);
             res.json({error: err});
         })
     })
     .catch(err => {
+        console.log(err);
         res.json({error: err});
     });
 }
@@ -157,12 +174,4 @@ exports.orderHistory = function(req, res, next){
         res.json({error: err});
     });
     //res.json({data: 'historial de ordenes'});
-}
-
-exports.dummyOrder = function(req, res, next){
-    db.query('SELECT * FROM CLIENTE', (err, r) => {
-        if(err) { res.json({err: err}); }
-        res.json({data: r});
-    });
-    //res.json({msg: 'Dummy Cliente'});
 }
