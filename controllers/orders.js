@@ -2,6 +2,7 @@ const nodemailer = require('nodemailer');
 const fs = require('fs');
 const dbPromise = require('../db_promise');
 const config = require('../config/config_db');
+const R = require('ramda');
 
 const DB_CONFIG = {
     host: 'localhost',
@@ -149,25 +150,16 @@ exports.OrdersOfTheWeek = function(req, res, next){
 
 exports.orderHistory = function(req, res, next){
     // EXECUTING PROCEDURES ON DB
-    DB_PRO.query(`call get_fecha(@fecha);`)
+    DB_PRO.query(`call orders_of_the_month(now())`)
     .then(resultado => {
-        // res.json({res: resultado});
-        return DB_PRO.query(`call orders_of_the_week(@fecha);`)
-        .then(resultado2 => {
-            return DB_PRO.query('select * from orders_of_the_week;')
-            .then(resQuery => {
-                res.json({data: resQuery});
-                return DB_PRO.query('truncate orders_of_the_week');
-            })
-            .catch(err => {
-                console.log(err);
-                res.json({error: err});
-            })
-        })
-        .catch(err => {
-            console.log(err);
-            res.json({error: err});
-        })
+        let r1 = resultado[0].map(item => {
+            return {id_cliente: item.id_cliente, mes: item.mes, nombre: item.nombre, id_orden: item.orden, orden: []}
+        });
+        let r2 = resultado[1].map(item => {
+            return {id_cliente: item.id_cliente, producto: item.nombre, cantidad_llevada: item.cantidad_llevada, monto_por_cantidad: item.monto}
+        });
+        let ids = r1.map(item => item.id_cliente);
+        res.json({data: [r1, r2]});
     })
     .catch(err => {
         console.log(err);
