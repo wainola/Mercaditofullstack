@@ -132,4 +132,15 @@ exports.saveProduct = function(req, res, next){
         });
     });
 
-}   
+}
+
+exports.getCategories = function(req, res, next){
+    DB_PRO.query('call getCategorias()')
+    .then(resultado => {
+        res.json({data: resultado[0]});
+    })
+    .catch(err => {
+        console.log(err);
+        res.json({error: err});
+    });
+}

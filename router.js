@@ -25,4 +25,5 @@ module.exports = function (app, CONEXION_MODELOS){
     app.post('/processingOrder', OrdersController.recieveOrder);
     app.get('/ordersOfTheWeek',requireAuth, OrdersController.OrdersOfTheWeek);
     app.get('/orderHistory', requireAuth, OrdersController.orderHistory);
+    app.get('/productsCategories', Productos.getCategories);
 }

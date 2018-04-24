@@ -26,6 +26,7 @@ class MainContent extends Component{
         this.props.fetchProductos();
     }
     render(){
+        console.log('main content');
         console.log(this.props.productos);
         return(
             <div>

@@ -1,10 +1,19 @@
 import React, {Component} from 'react';
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import {Link} from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../actions/index'
 
 class Navegacion extends Component {
-  // TODO: RENDER CONTENTS OF NAVIGATIONS MAKING A FETCH REQUEST TO CATEGORIES INSIDE MYSQL
+  componentDidMount() {
+    //this.props.getCategories();
+    console.log(this.props);
+  }
+  componentWillMount() {
+    console.log('Componente se montara');
+  }
   render() {
+    console.log(this.props.categorias_retornadas);
     return (
       <div>
         <Nav>
@@ -32,4 +41,8 @@ class Navegacion extends Component {
   }
 }
 
-export default Navegacion;
+function mapStateToProps({categorias}){
+  return {categorias};
+}
+
+export default connect(mapStateToProps, actions)(Navegacion);
