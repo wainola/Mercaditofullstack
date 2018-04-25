@@ -5,37 +5,52 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/index'
 
 class Navegacion extends Component {
-  componentDidMount() {
-    //this.props.getCategories();
-    console.log(this.props);
+  constructor(props){
+    super(props);
+    this.state = {
+      categorias: undefined
+    };
   }
-  componentWillMount() {
-    console.log('Componente se montara');
+  componentDidUpdate() {
+    if(this.props.categorias !== undefined){
+      console.log('categorias cargadas');
+      console.log(this.props.categorias);
+    }
+    // this.renderCategorias()
+  }
+  renderCategorias(){
+    console.log('Render categorias!');
+    return(
+      this.props.categorias.categorias_retornadas.map(item => 
+        <NavItem>
+          <Link to='' className='nav-link' key={item.nombre_categoria}>{item.nombre_categoria.toUpperCase()}</Link>
+        </NavItem>
+      )
+    );
   }
   render() {
-    console.log(this.props.categorias_retornadas);
+    console.log('render!');
+    console.log(this.props);
     return (
       <div>
-        <Nav>
-          <NavItem>
-            <NavLink href="#">Hortalizas</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#">Verduras</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#">Abarrotes</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#">Frutas</NavLink>
-          </NavItem>
-          <NavItem>
-            <Link to='/signin' className="nav-link">Login</Link>
-          </NavItem>
-          <NavItem>
-            <Link to='/signup' className="nav-link">Registro</Link>
-          </NavItem>
-        </Nav>
+          {this.props.categorias.length !== 0
+          ?
+          <div>
+            <Nav>
+              {this.renderCategorias()}
+              <NavItem>
+                <Link to='/signin' className="nav-link">{`${"login".toUpperCase()}`}</Link>
+              </NavItem>
+              <NavItem>
+                <Link to='/signup' className="nav-link">{`${"registro".toUpperCase()}`}</Link>
+              </NavItem>
+            </Nav>
+          </div>
+          :
+          <div>
+            Cargando categorias!
+          </div>
+          }
       </div>
     );
   }

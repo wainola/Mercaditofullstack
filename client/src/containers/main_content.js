@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchProductos} from '../actions/index';
+import {fetchProductos, getCategories} from '../actions/index';
 import {bindActionCreators} from 'redux';
 import ProductListing from './product_listing';
 import Navegacion from '../components/navegacion';
@@ -18,6 +18,7 @@ class MainContent extends Component{
     }
     componentDidMount(){
         this.onFetchData();
+        this.props.getCategories();
     }
     onFetchData(){
         // This execute the action.
@@ -26,8 +27,6 @@ class MainContent extends Component{
         this.props.fetchProductos();
     }
     render(){
-        console.log('main content');
-        console.log(this.props.productos);
         return(
             <div>
                 <div>
@@ -40,7 +39,7 @@ class MainContent extends Component{
                             {/* <h2 className="text-center">Nuestros Productos</h2> */}
                             <br />
                             <div className="row justify-content-center">
-                                <Navegacion />
+                                <Navegacion categorias={this.props.categorias}/>
                             </div>
                             <div className="row">
                                 <div className="container">
@@ -57,12 +56,12 @@ class MainContent extends Component{
     }
 }
 
-function mapStateToProps({productos}){
-    return {productos}; // { productos } === {productos:productos}
+function mapStateToProps({productos, categorias}){
+    return {productos, categorias}; // { productos } === {productos:productos}
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({fetchProductos}, dispatch);
+    return bindActionCreators({fetchProductos, getCategories}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainContent);
