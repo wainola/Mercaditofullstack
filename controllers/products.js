@@ -1,13 +1,12 @@
 const Producto = require('../model/Producto');
 const fs = require('fs');
-const db = require('../db');
 const dbPromise = require('../db_promise');
 const config = require('../config/config_db');
 
 // CONFIG DATA FOR THE DB PROMISE OBJECT
 const DB_CONFIG = {
     host: 'localhost',
-    user: config.username,
+    user: config.user,
     password: config.password,
     database: 'mercadito_de_larmahue'
 };
@@ -133,4 +132,15 @@ exports.saveProduct = function(req, res, next){
         });
     });
 
-}   
+}
+
+exports.getCategories = function(req, res, next){
+    DB_PRO.query('call getCategorias()')
+    .then(resultado => {
+        res.json({data: resultado[0]});
+    })
+    .catch(err => {
+        console.log(err);
+        res.json({error: err});
+    });
+}

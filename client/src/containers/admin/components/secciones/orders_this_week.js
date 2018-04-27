@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../../../actions';
 import { Table , Alert, Button, Modal, ModalHeader, ModalBody, ModalFooter, ListGroup, ListGroupItem } from 'reactstrap';
+import { calcFecha } from '../../../../utils/utils';
 
 class OrdersThisWeek extends Component{
     constructor(props){
@@ -34,11 +35,15 @@ class OrdersThisWeek extends Component{
                 <tr key={datos.id}>
                     <th>{datos.id}</th>
                     <th>{datos.nombre}</th>
+                    <th>{datos.fecha_orden}</th>
                     <th>{datos.email}</th>
                     <th>{datos.direccion}</th>
                     <th>{formatString(datos.monto_total.toString())}</th>
                     <th>
                         <Button className='btn btn-warning' onClick={() => this.modalDetalles(datos.compras, datos.monto_total)}>Detalles</Button>
+                    </th>
+                    <th>
+                        Acciones por hacer
                     </th>
                 </tr>
         );
@@ -59,23 +64,23 @@ class OrdersThisWeek extends Component{
         return this.state.monto_to_0 !== 0 ? this.state.monto_to_0 : 0;
     }
     render(){
-        let d = new Date();
-        let dia = d.getDate();
-        let mes = d.getMonth()+1;
-        let year = d.getFullYear();
+        console.log(this.props);
+        let fecha = calcFecha();
         return(
             <div className="container">
-                <h3 className='lead'>Ordenes de la Semana {`${dia}/${mes}/${year}`}</h3>
+                <h3 className='lead'>Ordenes de la Semana {`${fecha}`}</h3>
                 <div className="row justify-content-center">
                     <Table>
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Nombre</th>
+                                <th>Fecha Orden</th>
                                 <th>Email</th>
                                 <th>Dirección</th>
                                 <th>Total a pagar</th>
                                 <th>Detalles orden</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>

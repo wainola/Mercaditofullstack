@@ -11,3 +11,4 @@ export const GET_PURCHASE_VALUE = 'get_purchase_value';
 export const SUBTRACT_FROM_CART = 'subtract_from_cart';
 export const SEND_ORDER = 'send_order';
 export const ORDERS_OF_THE_WEEK = 'orders_of_the_week';
+export const GET_CATEGORIES = 'get_categories';

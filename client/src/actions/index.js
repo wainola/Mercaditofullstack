@@ -11,7 +11,8 @@ import {
     GET_PURCHASE_VALUE,
     SUBTRACT_FROM_CART,
     SEND_ORDER,
-    ORDERS_OF_THE_WEEK
+    ORDERS_OF_THE_WEEK,
+    GET_CATEGORIES
 } from './types';
 import { ROOT_URL } from '../utils/utils';
 
@@ -131,4 +132,13 @@ export function ordersOfTheWeek(){
             }
         )
     }    
+}
+
+export function getCategories(){
+    return function(dispatch){
+        axios.get(`${ROOT_URL}/productsCategories`)
+        .then(response => {
+            dispatch({type: GET_CATEGORIES, payload: response.data});
+        })
+    }
 }

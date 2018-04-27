@@ -5,6 +5,7 @@ import {reducer as formReducer} from 'redux-form';
 import authReducer from './auth_reducer';
 import ValorCompra from './reducer_purchase_value';
 import OrderReducer from './reducer_order';
+import CategoriesReducer from './reducer_categorias';
 
 const rootReducer = combineReducers({
     productos: ProductosReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     form: formReducer,
     auth: authReducer,
     valorCompra: ValorCompra,
-    order: OrderReducer
+    order: OrderReducer,
+    categorias: CategoriesReducer
 });
 
 export default rootReducer;
